@@ -1,0 +1,52 @@
+; Help Project File for SmartTab95
+; Copyright (c) 1996 vendor_name.
+; 
+; This Project File is based on a template provided by
+; Progress Software Corp. in association with the 
+; Progress SmartObjects Market.
+;
+
+[OPTIONS]
+
+BUILD=WINDOWS
+CONTENTS=Tab95Contents
+OLDKEYPHRASE=FALSE
+OPTCDROM=FALSE
+REPORT=FALSE
+TITLE=SmartTab95 Help
+WARNING=3
+COPYRIGHT=Copyright ¸ year vendor_name
+ERRORLOG=Tab95hlp.err
+COMPRESS=TRUE
+
+[BUILDTAGS]
+
+WINDOWS
+
+[CONFIG]
+
+SetHelpOnFile("hoh.hlp")
+CreateButton("tech-but","&Directory","JI(`techeng.hlp>main',`main_contents')")
+BrowseButtons()
+
+[WINDOWS]
+
+codeview="SmartTab95 Code View",(0,0,1023,1023),0,,(192,192,192)
+started="Started",(0,0,1023,1023),0,(255,255,255),(255,255,255)
+overview="OverView",(0,0,1023,1023),0,(255,255,255),(255,255,255)
+main=,,0,,(192,192,192)
+
+[BAGGAGE]
+
+[Map]
+
+#include <Tab95hlp.hh>
+
+[Files]
+
+Tab95hlp.rtf
+
+[Bitmaps]
+
+Tab95hlp.bmp
+Tab95ex.bmp

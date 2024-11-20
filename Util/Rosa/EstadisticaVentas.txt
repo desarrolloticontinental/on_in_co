@@ -1,0 +1,5 @@
+Div.|Cliente|Año|Mes|Fam|SubFam|Artículo - Descripción|Marca|Und Base|Cantidad|Importe
+00000|'20100094135-EXSA S.A.                            |     2,009|         1|005|017|'011524-PILAS  2400 AAA BLT X 4 (PEQUENA|DURACELL|UNI     |      105.00
+00000|'20100094135-EXSA S.A.                            |     2,009|         1|005|017|'011527-PILAS  1500 AA BLT X 4 (CHICA)  |DURACELL|UNI     |      105.00
+00000|'20100094135-EXSA S.A.                            |     2,009|         2|005|017|'011524-PILAS  2400 AAA BLT X 4 (PEQUENA|DURACELL|UNI     |       13.00
+00000|'20100094135-EXSA S.A.                            |     2,009|         2|005|017|'011527-PILAS  1500 AA BLT X 4 (CHICA)  |DURACELL|UNI     |       16.00

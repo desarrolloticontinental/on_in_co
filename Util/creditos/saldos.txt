@@ -1,0 +1,5 @@
+FOR EACH INTEGRAL.CcbCDocu NO-LOCK
+  WHERE ( codcia = 1
+    AND flgest = 'P'
+    AND lookup(coddoc, 'FAC,BOL,LET,N/D,CHQ,N/C,BD,A/R,A/C') > 0
+    AND sdoact > 0)

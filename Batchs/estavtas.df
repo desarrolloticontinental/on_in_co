@@ -1,0 +1,369 @@
+ADD TABLE "dwh_ventas_cab"
+  AREA "Data Area"
+  LABEL "Cabecera Documentos"
+  DUMP-NAME "dwh_ventas_cab"
+
+ADD FIELD "CodCia" OF "dwh_ventas_cab" AS integer 
+  DESCRIPTION "Código de compañia"
+  FORMAT "999"
+  INITIAL "0"
+  LABEL "Cia"
+  POSITION 2
+  MAX-WIDTH 4
+  COLUMN-LABEL "Cia"
+  HELP "Código de compañia"
+  ORDER 10
+
+ADD FIELD "CodDiv" OF "dwh_ventas_cab" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "C.Div"
+  POSITION 3
+  MAX-WIDTH 12
+  COLUMN-LABEL "C.Div"
+  ORDER 20
+
+ADD FIELD "CodDoc" OF "dwh_ventas_cab" AS character 
+  FORMAT "x(3)"
+  INITIAL ""
+  LABEL "Codigo"
+  POSITION 4
+  MAX-WIDTH 6
+  COLUMN-LABEL "Codigo"
+  ORDER 30
+
+ADD FIELD "NroDoc" OF "dwh_ventas_cab" AS character 
+  FORMAT "x(9)"
+  INITIAL ""
+  LABEL "Numero"
+  POSITION 5
+  MAX-WIDTH 18
+  COLUMN-LABEL "Numero"
+  ORDER 40
+
+ADD FIELD "CodCli" OF "dwh_ventas_cab" AS character 
+  FORMAT "x(11)"
+  INITIAL ""
+  LABEL "Codigo"
+  POSITION 6
+  MAX-WIDTH 22
+  COLUMN-LABEL "Codigo"
+  HELP "C¢digo del Cliente"
+  ORDER 50
+
+ADD FIELD "CodVen" OF "dwh_ventas_cab" AS character 
+  FORMAT "X(3)"
+  INITIAL ""
+  LABEL "Codigo de Vendedor"
+  POSITION 7
+  MAX-WIDTH 6
+  COLUMN-LABEL "Codigo!Vendedor"
+  ORDER 60
+
+ADD FIELD "FmaPgo" OF "dwh_ventas_cab" AS character 
+  FORMAT "x(8)"
+  INITIAL ""
+  LABEL "Condicion de Venta"
+  POSITION 8
+  MAX-WIDTH 16
+  COLUMN-LABEL "Condicion de Venta"
+  ORDER 70
+
+ADD FIELD "Fecha" OF "dwh_ventas_cab" AS integer 
+  FORMAT "99999999"
+  INITIAL "0"
+  POSITION 9
+  MAX-WIDTH 4
+  COLUMN-LABEL "Fecha"
+  ORDER 80
+
+ADD FIELD "ImpNacCIGV" OF "dwh_ventas_cab" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 10
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Nac con IGV"
+  DECIMALS 2
+  ORDER 90
+
+ADD FIELD "ImpNacSIGV" OF "dwh_ventas_cab" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 11
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Nac sin IGV"
+  DECIMALS 2
+  ORDER 100
+
+ADD FIELD "ImpExtCIGV" OF "dwh_ventas_cab" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 12
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Ext Con IGV"
+  DECIMALS 2
+  ORDER 110
+
+ADD FIELD "ImpExtSIGV" OF "dwh_ventas_cab" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 13
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Ext Sin IGV"
+  DECIMALS 2
+  ORDER 120
+
+ADD FIELD "TpoCmb" OF "dwh_ventas_cab" AS decimal 
+  FORMAT ">>,>>9.9999"
+  INITIAL "0"
+  LABEL "Tipo Cambio"
+  POSITION 14
+  MAX-WIDTH 17
+  COLUMN-LABEL "Tipo Cambio"
+  DECIMALS 4
+  ORDER 130
+
+ADD FIELD "Zona" OF "dwh_ventas_cab" AS character 
+  FORMAT "x(8)"
+  INITIAL ""
+  POSITION 15
+  MAX-WIDTH 16
+  ORDER 140
+
+ADD FIELD "TpoCmbvta" OF "dwh_ventas_cab" AS decimal 
+  FORMAT ">>,>>9.9999"
+  INITIAL "1"
+  POSITION 16
+  MAX-WIDTH 19
+  DECIMALS 4
+  ORDER 150
+
+ADD FIELD "TpoCmbCmp" OF "dwh_ventas_cab" AS decimal 
+  FORMAT ">>,>>9.9999"
+  INITIAL "1"
+  POSITION 17
+  MAX-WIDTH 19
+  DECIMALS 4
+  ORDER 160
+
+ADD FIELD "Tipo" OF "dwh_ventas_cab" AS character 
+  DESCRIPTION "MOSTRADOR
+CREDITO"
+  FORMAT "x(10)"
+  INITIAL ""
+  POSITION 19
+  MAX-WIDTH 20
+  ORDER 170
+
+ADD FIELD "DivDes" OF "dwh_ventas_cab" AS character 
+  DESCRIPTION "Sede donde se despachó la mercadería"
+  FORMAT "x(5)"
+  INITIAL ""
+  POSITION 20
+  MAX-WIDTH 10
+  ORDER 180
+
+ADD INDEX "Index00" ON "dwh_ventas_cab" 
+  AREA "Data Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "CodCia" ASCENDING 
+  INDEX-FIELD "CodDiv" ASCENDING 
+  INDEX-FIELD "CodDoc" ASCENDING 
+  INDEX-FIELD "NroDoc" ASCENDING 
+
+ADD INDEX "Index01" ON "dwh_ventas_cab" 
+  AREA "Data Area"
+  INDEX-FIELD "CodCia" ASCENDING 
+  INDEX-FIELD "Fecha" ASCENDING 
+
+ADD TABLE "dwh_ventas_det"
+  AREA "Data Area"
+  LABEL "Detalle Documentos"
+  DUMP-NAME "dwh_ventas_det"
+
+ADD FIELD "CodCia" OF "dwh_ventas_det" AS integer 
+  DESCRIPTION "Código de compañia"
+  FORMAT "999"
+  INITIAL "0"
+  LABEL "Cia"
+  POSITION 2
+  MAX-WIDTH 4
+  COLUMN-LABEL "Cia"
+  HELP "Código de compañia"
+  ORDER 10
+
+ADD FIELD "CodDiv" OF "dwh_ventas_det" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "C.Div"
+  POSITION 3
+  MAX-WIDTH 12
+  COLUMN-LABEL "C.Div"
+  ORDER 20
+
+ADD FIELD "CodDoc" OF "dwh_ventas_det" AS character 
+  FORMAT "x(3)"
+  INITIAL ""
+  LABEL "Codigo"
+  POSITION 4
+  MAX-WIDTH 6
+  COLUMN-LABEL "Codigo"
+  ORDER 30
+
+ADD FIELD "NroDoc" OF "dwh_ventas_det" AS character 
+  FORMAT "x(9)"
+  INITIAL ""
+  LABEL "Numero"
+  POSITION 5
+  MAX-WIDTH 18
+  COLUMN-LABEL "Numero"
+  ORDER 40
+
+ADD FIELD "CodMat" OF "dwh_ventas_det" AS character 
+  FORMAT "X(6)"
+  INITIAL ""
+  LABEL "Codigo Articulo"
+  POSITION 6
+  MAX-WIDTH 12
+  COLUMN-LABEL "Codigo Articulo"
+  ORDER 50
+
+ADD FIELD "Cantidad" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 7
+  MAX-WIDTH 17
+  COLUMN-LABEL "Cantidad"
+  DECIMALS 2
+  ORDER 60
+
+ADD FIELD "ImpNacCIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 8
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Nac con IGV"
+  DECIMALS 2
+  ORDER 70
+
+ADD FIELD "ImpNacSIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 9
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Nac sin IGV"
+  DECIMALS 2
+  ORDER 80
+
+ADD FIELD "ImpExtCIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 10
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Ext Con IGV"
+  DECIMALS 2
+  ORDER 90
+
+ADD FIELD "ImpExtSIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 11
+  MAX-WIDTH 17
+  COLUMN-LABEL "Importe Ext Sin IGV"
+  DECIMALS 2
+  ORDER 100
+
+ADD FIELD "CostoNacCIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 12
+  MAX-WIDTH 17
+  COLUMN-LABEL "Costo Nac con IGV"
+  DECIMALS 2
+  ORDER 110
+
+ADD FIELD "CostoNacSIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 13
+  MAX-WIDTH 17
+  COLUMN-LABEL "Costo Nac sin IGV"
+  DECIMALS 2
+  ORDER 120
+
+ADD FIELD "CostoExtCIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 14
+  MAX-WIDTH 17
+  COLUMN-LABEL "Costo Ext Con IGV"
+  DECIMALS 2
+  ORDER 130
+
+ADD FIELD "CostoExtSIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  POSITION 15
+  MAX-WIDTH 17
+  COLUMN-LABEL "Costo Ext Sin IGV"
+  DECIMALS 2
+  ORDER 140
+
+ADD FIELD "PromNacCIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  LABEL "Costo Promedio Nac con IGV"
+  POSITION 16
+  MAX-WIDTH 17
+  DECIMALS 2
+  ORDER 150
+
+ADD FIELD "PromNacSIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  LABEL "Costo Promedio Nac sin IGV"
+  POSITION 17
+  MAX-WIDTH 17
+  DECIMALS 2
+  ORDER 160
+
+ADD FIELD "PromExtCIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  LABEL "Costo Promedio Ext con IGV"
+  POSITION 18
+  MAX-WIDTH 17
+  DECIMALS 2
+  ORDER 170
+
+ADD FIELD "PromExtSIGV" OF "dwh_ventas_det" AS decimal 
+  FORMAT "->>>,>>>,>>9.99"
+  INITIAL "0"
+  LABEL "Costo Promedio Ext sin IGV"
+  POSITION 19
+  MAX-WIDTH 17
+  DECIMALS 2
+  ORDER 180
+
+ADD FIELD "AlmDes" OF "dwh_ventas_det" AS character 
+  DESCRIPTION "Almacén de despacho"
+  FORMAT "x(3)"
+  INITIAL ""
+  POSITION 20
+  MAX-WIDTH 6
+  ORDER 190
+
+ADD INDEX "Index01" ON "dwh_ventas_det" 
+  AREA "Data Area"
+  PRIMARY
+  INDEX-FIELD "CodCia" ASCENDING 
+  INDEX-FIELD "CodDiv" ASCENDING 
+  INDEX-FIELD "CodDoc" ASCENDING 
+  INDEX-FIELD "NroDoc" ASCENDING 
+
+.
+PSC
+cpstream=ISO8859-1
+.
+0000007338

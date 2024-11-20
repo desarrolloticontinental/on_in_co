@@ -1,0 +1,133 @@
+&ANALYZE-SUSPEND _VERSION-NUMBER UIB_v8r12
+/* Procedure Description
+"Inicio del sistema"
+*/
+&ANALYZE-RESUME
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _DEFINITIONS Procedure 
+/*--------------------------------------------------------------------------
+    File        : 
+    Purpose     :
+
+    Syntax      :
+
+    Description :
+
+    Author(s)   :
+    Created     :
+    Notes       :
+  ------------------------------------------------------------------------*/
+/*          This .W file was created with the Progress UIB.             */
+/*----------------------------------------------------------------------*/
+
+/* ***************************  Definitions  ************************** */
+
+DEFINE NEW SHARED VARIABLE pRCID AS INT.
+
+DEFINE VARIABLE OK AS LOGICAL NO-UNDO.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-PREPROCESSOR-BLOCK 
+
+/* ********************  Preprocessor Definitions  ******************** */
+
+&Scoped-define PROCEDURE-TYPE Procedure
+&Scoped-define DB-AWARE no
+
+
+
+/* _UIB-PREPROCESSOR-BLOCK-END */
+&ANALYZE-RESUME
+
+
+
+/* *********************** Procedure Settings ************************ */
+
+&ANALYZE-SUSPEND _PROCEDURE-SETTINGS
+/* Settings for THIS-PROCEDURE
+   Type: Procedure
+   Allow: 
+   Frames: 0
+   Add Fields to: Neither
+   Other Settings: CODE-ONLY COMPILE
+ */
+&ANALYZE-RESUME _END-PROCEDURE-SETTINGS
+
+/* *************************  Create Window  ************************** */
+
+&ANALYZE-SUSPEND _CREATE-WINDOW
+/* DESIGN Window definition (used by the UIB) 
+  CREATE WINDOW Procedure ASSIGN
+         HEIGHT             = 7.38
+         WIDTH              = 47.29.
+/* END WINDOW DEFINITION */
+                                                                        */
+&ANALYZE-RESUME
+
+ 
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _MAIN-BLOCK Procedure 
+
+
+/* ***************************  Main Block  *************************** */
+
+/* El usuario ha sido definido al arrenque con los paramteros -U y -P */
+IF USERID("integral") = ? THEN DO:
+    MESSAGE 'Usuario NO definido' VIEW-AS ALERT-BOX ERROR.
+    QUIT.
+END.
+DEFINE NEW GLOBAL SHARED VARIABLE s-user-id AS CHARACTER FORMAT "x(16)".
+DEFINE NEW SHARED VARIABLE s-codcia  AS INTEGER   FORMAT "999".
+DEFINE NEW SHARED VARIABLE s-ruccia  AS CHAR.
+DEFINE NEW SHARED VARIABLE cb-codcia AS INTEGER   FORMAT "999".
+DEFINE NEW SHARED VARIABLE cl-codcia AS INTEGER   FORMAT "999".
+DEFINE NEW SHARED VARIABLE pv-codcia AS INTEGER   FORMAT "999".
+DEFINE NEW SHARED VARIABLE s-nomcia  AS CHARACTER FORMAT "X(50)".
+DEFINE NEW SHARED VARIABLE s-nomcia1 AS CHARACTER FORMAT "X(60)".
+DEFINE NEW SHARED VARIABLE s-dircia  AS CHARACTER FORMAT "X(50)".
+DEFINE NEW SHARED VARIABLE s-OpSys      AS CHAR.
+GET-KEY-VALUE SECTION 'Startup' KEY 'OpSysVersion' VALUE s-OpSys.
+
+/* CONFIGURACIONES DE ENTORNO POR DEFECTO */
+SESSION:DATA-ENTRY-RETURN = NO.    /* << OJO actua como si fuera TAB */
+SESSION:APPL-ALERT-BOXES  = NO.     /* << OJO si es TRUE los mensajes son alert-box */
+SESSION:SYSTEM-ALERT-BOXES  = YES.     /* << OJO si es TRUE los mensajes son alert-box */
+SESSION:SUPPRESS-WARNINGS  = YES.     /* << OJO si es TRUE los mensajes son alert-box */
+SESSION:TIME-SOURCE = "integral".   /* Toma la fecha y hora del servidor de 'integral' */
+
+FIND FIRST gn-cias NO-LOCK NO-ERROR.
+IF NOT AVAILABLE gn-cias THEN DO:
+    MESSAGE 'Compañias aún no han registradas' VIEW-AS ALERT-BOX ERROR.
+    QUIT.
+END.
+ASSIGN
+    s-codcia = GN-Cias.CodCia
+    s-nomcia = GN-Cias.NomCia
+    s-nomcia1= GN-Cias.Libre-C[1]
+    s-dircia = GN-Cias.DirCia
+    s-ruccia = STRING(GN-Cias.RucCia).
+
+ASSIGN
+    s-user-id = USERID("integral").
+
+/* ****************************************************************************** */
+/* ********************* Datos Generales por Empresa ***************************** */
+/* ****************************************************************************** */
+FIND FIRST Empresas WHERE Empresas.codcia = s-codcia NO-LOCK NO-ERROR.
+IF AVAILABLE Empresas THEN DO:
+    IF NOT Empresas.Campo-CodCbd THEN cb-codcia = s-codcia.
+    IF NOT Empresas.Campo-CodCli THEN cl-codcia = s-codcia.
+    IF NOT Empresas.Campo-CodPro THEN pv-codcia = s-codcia.
+END.
+/* ****************************************************************************** */
+RUN MINI/mainmenu.r.
+    
+QUIT.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+

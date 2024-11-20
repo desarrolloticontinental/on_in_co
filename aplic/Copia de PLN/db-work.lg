@@ -1,0 +1,75 @@
+
+                Wed Nov 07 17:52:55 2012
+[2012/11/07@17:52:55.634-0500] P-1552       T-160   I DBUTIL   : (451)   Inicio de sesión prostrct create para administrador en CON:. 
+[2012/11/07@17:52:55.681-0500] P-1552       T-160   I DBUTIL   : (12862) El fichero de estructura C:\newsie\on_in_co\aplic\PLN\db-work.st usado para crear la base de datos con el blocksize 4096. 
+[2012/11/07@17:52:55.681-0500] P-1552       T-160   I DBUTIL   : (334)   Fin de sesión prostrct create. 
+[2012/11/07@17:52:55.681-0500] P-1552       T-160   I DBUTIL   : (451)   Inicio de sesión procopy para administrador en CON:. 
+[2012/11/07@17:52:55.868-0500] P-1552       T-160   I DBUTIL   : (334)   Fin de sesión procopy. 
+
+                Wed Nov 07 17:52:55 2012
+[2012/11/07@17:52:55.868-0500] P-1552       T-160   I          : (451)   Inicio de sesión procopy get default SQL DBA para administrador en CON:. 
+[2012/11/07@17:52:56.040-0500] P-1552       T-160   I          : (334)   Fin de sesión procopy get default SQL DBA. 
+
+                Wed Nov 07 17:52:57 2012
+[2012/11/07@17:52:57.478-0500] P-2828       T-2928  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2012/11/07@17:52:57.493-0500] P-2828       T-2928  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2012/11/07@17:52:57.493-0500] P-2828       T-2928  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 0 off 1125 upd 0. 
+[2012/11/07@17:52:57.509-0500] P-2828       T-2928  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2012/11/07@17:52:57.509-0500] P-2828       T-2928  I ABL      : (12699) Base de datos db-work Opciones:  
+[2012/11/07@17:54:36.211-0500] P-2828       T-2928  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Thu Nov 08 16:54:05 2012
+[2012/11/08@16:54:05.897-0500] P-3008       T-3352  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2012/11/08@16:54:05.929-0500] P-3008       T-3352  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2012/11/08@16:54:06.132-0500] P-3008       T-3352  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 207 upd 0. 
+[2012/11/08@16:54:06.132-0500] P-3008       T-3352  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2012/11/08@16:54:06.179-0500] P-3008       T-3352  I ABL      : (12699) Base de datos db-work Opciones:  
+[2012/11/08@16:54:20.414-0500] P-3008       T-3352  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Tue Nov 13 10:29:31 2012
+[2012/11/13@10:29:31.245-0500] P-564        T-1076  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2012/11/13@10:29:31.245-0500] P-564        T-1076  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2012/11/13@10:29:31.245-0500] P-564        T-1076  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 267 upd 0. 
+[2012/11/13@10:29:31.245-0500] P-564        T-1076  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2012/11/13@10:29:31.245-0500] P-564        T-1076  I ABL      : (12699) Base de datos db-work Opciones:  
+[2012/11/13@15:04:45.437-0500] P-564        T-1076  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Tue Apr 02 12:22:11 2013
+[2013/04/02@12:22:11.423-0500] P-1936       T-3888  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2013/04/02@12:22:11.455-0500] P-1936       T-3888  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2013/04/02@12:22:11.548-0500] P-1936       T-3888  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 327 upd 0. 
+[2013/04/02@12:22:11.548-0500] P-1936       T-3888  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2013/04/02@12:22:11.548-0500] P-1936       T-3888  I ABL      : (12699) Base de datos db-work Opciones:  
+[2013/04/02@12:25:34.673-0500] P-1936       T-3888  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Tue Oct 15 11:22:22 2013
+[2013/10/15@11:22:22.289-0500] P-3444       T-1856  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2013/10/15@11:22:22.305-0500] P-3444       T-1856  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2013/10/15@11:22:22.305-0500] P-3444       T-1856  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 387 upd 0. 
+[2013/10/15@11:22:22.305-0500] P-3444       T-1856  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2013/10/15@11:22:22.305-0500] P-3444       T-1856  I ABL      : (12699) Base de datos db-work Opciones:  
+[2013/10/15@11:27:30.807-0500] P-3444       T-1856  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Wed Nov 20 11:41:20 2013
+[2013/11/20@11:41:20.545-0500] P-3984       T-3492  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2013/11/20@11:41:20.607-0500] P-3984       T-3492  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2013/11/20@11:41:20.685-0500] P-3984       T-3492  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 387 upd 0. 
+[2013/11/20@11:41:20.701-0500] P-3984       T-3492  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2013/11/20@11:41:20.717-0500] P-3984       T-3492  I ABL      : (12699) Base de datos db-work Opciones:  
+[2013/11/20@11:41:27.251-0500] P-3984       T-3492  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Fri Dec 20 16:59:26 2013
+[2013/12/20@16:59:26.669-0500] P-4028       T-984   I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2013/12/20@16:59:26.701-0500] P-4028       T-984   I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2013/12/20@16:59:26.779-0500] P-4028       T-984   I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 387 upd 0. 
+[2013/12/20@16:59:26.794-0500] P-4028       T-984   I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2013/12/20@16:59:26.826-0500] P-4028       T-984   I ABL      : (12699) Base de datos db-work Opciones:  
+[2013/12/20@17:07:09.310-0500] P-4028       T-984   I ABL      : (334)   Fin de sesión Single-user. 
+
+                Tue Jan 28 10:42:29 2014
+[2014/01/28@10:42:29.269-0500] P-1524       T-1220  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2014/01/28@10:42:29.269-0500] P-1524       T-1220  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2014/01/28@10:42:29.285-0500] P-1524       T-1220  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 387 upd 0. 
+[2014/01/28@10:42:29.285-0500] P-1524       T-1220  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2014/01/28@10:42:29.285-0500] P-1524       T-1220  I ABL      : (12699) Base de datos db-work Opciones:  
+[2014/01/28@10:42:51.301-0500] P-1524       T-1220  I ABL      : (334)   Fin de sesión Single-user. 

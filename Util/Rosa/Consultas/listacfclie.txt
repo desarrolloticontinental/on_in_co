@@ -1,0 +1,13 @@
+OUTPUT TO "D:/clfclie.txt".
+    PUT UNFORMATTED 
+        "Categoria|Descripcion|Monto de la compra|"
+        "Porcentaje Dscto|Porcentaje Dscto 1" SKIP.
+    FOR EACH clfclie  NO-LOCK :
+        PUT UNFORMATTED
+            ClfClie.Categoria  "|"
+            ClfClie.DesCat     "|"
+            ClfClie.MtoCmp     "|"
+            ClfClie.PorDsc     "|"
+            ClfClie.PorDsc1 SKIP.
+    END.
+OUTPUT TO CLOSE.

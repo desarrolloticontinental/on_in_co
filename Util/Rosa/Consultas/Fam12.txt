@@ -1,0 +1,46 @@
+OUTPUT TO "D:/Fam12.txt".
+PUT UNFORMATTED
+    "CodUnico|CodCli|Nombre|Canal|NroCard|Pais|Prov|Dept|Dist|Sede|"
+    "Año|Mes|Fecha|Div|Vend|Proveedor|CodMat|DesMat|DesMar|"
+    "CanxMes|VtaxMesMn|VtaxMesMe|Factor" SKIP.
+    
+FOR EACH gn-divi WHERE gn-divi.CodCia = 1 NO-LOCK:
+    FOR EACH Almmmatg WHERE Almmmatg.CodCia = 1
+        AND Almmmatg.CodFam = "012" NO-LOCK,
+        EACH Evtall01 USE-INDEX Indice03
+        WHERE Evtall01.CodCia = almmmatg.CodCia
+        AND EvtAll01.CodDiv = gn-divi.CodDiv
+        AND Evtall01.CodMat = Almmmatg.CodMat NO-LOCK:
+        FIND FIRST gn-clie WHERE gn-clie.CodCia = 0
+            AND gn-clie.CodCli = EvtAll01.codUnico NO-LOCK NO-ERROR.
+        PUT UNFORMATTED
+            EvtALL01.CodUnico "|" 
+            EvtALL01.CodCli   "|"
+            gn-clie.NomCli    "|"
+            EvtALL01.Canal    "|"
+            EvtALL01.NroCard  "|"
+            EvtALL01.CodPais  "|"
+            EvtALL01.CodProv  "|"
+            EvtALL01.CodDept  "|"
+            EvtALL01.CodDist  "|"
+            EvtALL01.Sede     "|"
+            EvtALL01.Codano   "|"
+            EvtALL01.Codmes   "|"
+            EvtALL01.Nrofch   "|"
+            EvtALL01.CodDiv   "|"
+            EvtALL01.CodVen   "|"
+            EvtALL01.CodPro   "|"
+            EvtALL01.codmat   "|"
+            Almmmatg.DesMat   "|"
+            EvtALL01.DesMar   "|"
+            EvtALL01.CanxMes  "|"
+            EvtALL01.VtaxMesMe "|"
+            EvtALL01.VtaxMesMn "|"
+            EvtALL01.FmaPgo    SKIP.
+    END.
+END.
+OUTPUT TO CLOSE.
+
+/*
+     
+*/

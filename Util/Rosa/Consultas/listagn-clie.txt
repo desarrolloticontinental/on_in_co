@@ -1,0 +1,54 @@
+DEFINE VARIABLE i       AS INTEGER     NO-UNDO.
+DEFINE VARIABLE j       AS INTEGER     NO-UNDO.
+DEFINE VARIABLE cVal1   AS CHARACTER   NO-UNDO.
+DEFINE VARIABLE cValMay AS CHARACTER   NO-UNDO.
+
+OUTPUT TO "D:/gn-clie0.txt".
+PUT UNFORMATTED
+    "Codigo|Nombre|RUC|Cod.Postal|Pais|Departamento|Provincia|"
+    "Distrito|Telefono1|telefono2|telefono3|E-Mail|Clasificacion" SKIP.
+    
+FOR EACH evtall03 NO-LOCK USE-INDEX Indice02
+    WHERE evtall03.codcia = 1 
+    AND NOT evtall03.codunico BEGINS "11111"
+    AND evtall03.codunico <> "20511358907"
+    BREAK BY vtaxmesmn DESC:
+    FIND FIRST gn-clie WHERE gn-clie.Codcia = 0
+        AND gn-clie.codcli = evtall03.CodUnico NO-LOCK NO-ERROR.
+
+    cValMay = "".
+    DO j = 1 TO NUM-ENTRIES(gn-clie.CndVta):
+        cVal1 = ENTRY(j,gn-clie.CndVta).
+        IF cVal1 > cValMay THEN cValMay = cVal1.
+    END.
+
+    IF AVAILABLE gn-clie THEN DO:
+        PUT UNFORMATTED 
+            gn-clie.CodCli     "|"
+            gn-clie.NomCli     "|"
+            gn-clie.Ruc        "|"     
+            gn-clie.codpos     "|"
+            gn-clie.CodPais    "|"
+            gn-clie.CodDept    "|"
+            gn-clie.CodProv    "|"
+            gn-clie.CodDist    "|"
+            gn-clie.DirCli     "|"
+            gn-clie.E-Mail     "|" 
+            gn-clie.Telfnos[1] "|"
+            gn-clie.Telfnos[2] "|"
+            gn-clie.Telfnos[3] "|"
+            cValMay            "|"                       
+            gn-clie.clfCli     SKIP.
+        i = i + 1.
+    END.
+    IF i = 10 THEN LEAVE.
+END.
+OUTPUT TO CLOSE.
+
+/*
+
+CodCli, NomCli, Ruc, Codpos, CodPais, CodDept, CodProv, CodDist, DirCli, E_Mail,
+Telfnos_001, Telfnos_002, Telfnos_003, CndVta, clfCli 
+
+*/
+

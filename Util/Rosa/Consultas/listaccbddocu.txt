@@ -1,0 +1,36 @@
+DEFINE VARIABLE i AS INTEGER     NO-UNDO.
+OUTPUT TO "D:/ccbddocu.txt".
+    FOR EACH evtall03 NO-LOCK USE-INDEX Indice02
+        WHERE evtall03.codcia = 1 
+        AND NOT evtall03.codunico BEGINS "11111"
+        AND evtall03.codunico <> "20511358907"
+        BREAK BY vtaxmesmn DESC:
+        FOR EACH ccbcdocu WHERE ccbcdocu.codcia = 1
+            AND ccbcdocu.codcli = evtall03.codunico
+            AND ccbcdocu.fchdoc >= 09/26/2009
+            AND ccbcdocu.fchdoc <= 10/26/2009
+            AND LOOKUP(ccbcdocu.coddoc,'FAC,BOL,LET,N/C,N/D,TCK,BD') > 0
+            AND ccbcdocu.flgest <> "A" NO-LOCK,
+            EACH ccbddocu OF ccbcdocu NO-LOCK:
+            PUT UNFORMATTED
+                ccbcdocu.coddoc   "|"
+                ccbcdocu.nrodoc   "|"
+                ccbddocu.codmat   "|"
+                ccbddocu.undvta   "|"
+                ccbddocu.preuni   "|"
+                ccbddocu.candes   "|"
+                ccbddocu.almdes   "|"
+                ccbddocu.Por_Dsctos[1]  "|"
+                ccbddocu.Por_Dsctos[2]  "|"
+                ccbddocu.Por_Dsctos[3]  "|"
+                ccbddocu.factor SKIP.
+        END.
+        i = i + 1.
+        IF i = 6 THEN LEAVE.
+    END.
+OUTPUT TO CLOSE.
+
+/*
+
+coddoc, nrodoc,codmat, undvta, preuni, candes, AlmDes,Por_Dsctos, factor
+*/

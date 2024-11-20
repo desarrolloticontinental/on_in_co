@@ -1,0 +1,13 @@
+DEFINE TEMP-TABLE tmp-table 
+    FIELDS codmat LIKE almmmatg.codmat
+    FIELDS codfam LIKE almmmatg.codfam
+    FIELDS subfam LIKE almmmatg.subfam
+    FIELDS codmar LIKE almmmatg.codmar.
+
+INPUT FROM VALUE "D:\ArtWeb.txt".
+REPEAT:
+    CREATE tmp-table.
+    IMPORT DELIMITER "|" tmp-table NO-ERROR.
+END.
+INPUT CLOSE.
+

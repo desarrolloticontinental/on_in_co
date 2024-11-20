@@ -1,0 +1,26 @@
+DEFINE TEMP-TABLE tmp-table 
+    FIELDS codmat LIKE almmmatg.codmat
+    FIELDS pesmat LIKE almmmatg.pesmat
+    FIELDS volmat LIKE almmmatg.pesmat.
+
+INPUT FROM  "D:\Pesos.txt".
+REPEAT:
+    CREATE tmp-table.
+    IMPORT DELIMITER "" tmp-table NO-ERROR.
+END.
+INPUT CLOSE.
+
+FOR EACH tmp-table NO-LOCK:
+    DISPLAY
+        codmat
+        pesmat
+        volmat.
+    FIND FIRST almmmatg WHERE almmmatg.codcia = 1
+        AND almmmatg.codmat = tmp-table.codmat NO-ERROR.
+    IF AVAIL almmmatg THEN 
+        ASSIGN 
+            almmmatg.libre_D02 = tmp-table.volmat
+            almmmatg.pesmat    = tmp-table.pesmat.
+            
+    PAUSE 0.
+END.

@@ -1,0 +1,373 @@
+&ANALYZE-SUSPEND _VERSION-NUMBER UIB_v8r12 GUI
+/* Procedure Description
+"autorización de ingreso al usuario"
+*/
+&ANALYZE-RESUME
+&Scoped-define WINDOW-NAME CURRENT-WINDOW
+&Scoped-define FRAME-NAME W-INGRESO
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _DEFINITIONS W-INGRESO 
+/*------------------------------------------------------------------------
+
+  File: 
+
+  Description: 
+
+  Input Parameters:
+      <none>
+
+  Output Parameters:
+      <none>
+
+  Author: 
+
+  Created: 07/07/94 -  5:08 pm
+
+------------------------------------------------------------------------*/
+/*          This .W file was created with the Progress UIB.             */
+/*----------------------------------------------------------------------*/
+
+/* ***************************  Definitions  ************************** */
+
+/* Parameters Definitions ---                                           */
+
+&IF "{&NEW}" = "" &THEN
+    DEFINE INPUT PARAMETER cLogico AS LOGICAL NO-UNDO.
+&ELSE
+    DEFINE VARIABLE        cLogico AS LOGICAL NO-UNDO.
+&ENDIF
+/* Local Variable Definitions ---                                       */
+DEFINE VARIABLE veces       AS INTEGER NO-UNDO.
+DEFINE VARIABLE Ciclo       AS INTEGER NO-UNDO INITIAL 0.
+DEFINE VARIABLE x-user-name AS CHARACTER FORMAT "X(16)" NO-UNDO.
+DEFINE VARIABLE pto AS LOGICAL.
+DEFINE VARIABLE S-CLAVE    AS CHARACTER NO-UNDO.
+pto = SESSION:SET-WAIT-STATE("").
+
+SESSION:DATA-ENTRY-RETURN = YES.
+
+/*
+IF LDBNAME("DICTDB") <> "INTEGRAL"
+THEN DO ON ERROR UNDO, LEAVE:
+    IF NOT SETUSERID(USERID("INTEGRAL"), "", "DICTDB") 
+    THEN RUN CREATE_USER.
+    RETURN.
+END.
+*/
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-PREPROCESSOR-BLOCK 
+
+/* ********************  Preprocessor Definitions  ******************** */
+
+&Scoped-define PROCEDURE-TYPE DIALOG-BOX
+
+/* Name of first Frame and/or Browse and/or first Query                 */
+&Scoped-define FRAME-NAME W-INGRESO
+
+/* Standard List Definitions                                            */
+&Scoped-Define ENABLED-OBJECTS RECT-2 IMAGE-1 RECT-1 S-User-Id x-password ~
+b-acepta b-cancelar B-ayuda 
+&Scoped-Define DISPLAYED-OBJECTS S-User-Id x-password 
+
+/* Custom List Definitions                                              */
+/* List-1,List-2,List-3,List-4,List-5,List-6                            */
+
+/* _UIB-PREPROCESSOR-BLOCK-END */
+&ANALYZE-RESUME
+
+
+
+/* ***********************  Control Definitions  ********************** */
+
+/* Define a dialog box                                                  */
+
+/* Definitions of the field level widgets                               */
+DEFINE BUTTON b-acepta AUTO-GO 
+     IMAGE-UP FILE "img/b-ok":U
+     LABEL "&Aceptar" 
+     SIZE 11 BY 1.67.
+
+DEFINE BUTTON B-ayuda 
+     IMAGE-UP FILE "img/b-ayuda":U
+     LABEL "Ayuda" 
+     SIZE 11 BY 1.67.
+
+DEFINE BUTTON b-cancelar AUTO-END-KEY 
+     IMAGE-UP FILE "img/b-cancel":U
+     LABEL "&Cancelar" 
+     SIZE 11 BY 1.67.
+
+DEFINE VARIABLE S-User-Id AS CHARACTER FORMAT "X(16)":U INITIAL ? 
+     LABEL "Usuario" 
+     VIEW-AS FILL-IN 
+     SIZE 21 BY .81
+     BGCOLOR 15 FGCOLOR 0 .
+
+DEFINE VARIABLE x-password AS CHARACTER FORMAT "X(16)":U INITIAL ? 
+     LABEL "Clave" 
+     VIEW-AS FILL-IN 
+     SIZE 21 BY .81
+     BGCOLOR 15 FGCOLOR 0  NO-UNDO.
+
+DEFINE IMAGE IMAGE-1
+     FILENAME "img/vlogo":U
+     SIZE 17 BY 5.52.
+
+DEFINE RECTANGLE RECT-1
+     EDGE-PIXELS 4 GRAPHIC-EDGE  
+     SIZE 59.8 BY 2.43
+     BGCOLOR 8 FGCOLOR 0 .
+
+DEFINE RECTANGLE RECT-2
+     EDGE-PIXELS 4 GRAPHIC-EDGE  
+     SIZE 60 BY 6.52
+     BGCOLOR 8 FGCOLOR 0 .
+
+
+/* ************************  Frame Definitions  *********************** */
+
+DEFINE FRAME W-INGRESO
+     S-User-Id AT ROW 2.52 COL 32 COLON-ALIGNED
+     x-password AT ROW 5 COL 32 COLON-ALIGNED
+     b-acepta AT ROW 7.86 COL 8.2
+     b-cancelar AT ROW 7.86 COL 26.8
+     B-ayuda AT ROW 7.86 COL 45
+     RECT-2 AT ROW 1 COL 1
+     IMAGE-1 AT ROW 1.48 COL 2
+     RECT-1 AT ROW 7.52 COL 1.2
+    WITH VIEW-AS DIALOG-BOX KEEP-TAB-ORDER 
+         SIDE-LABELS NO-UNDERLINE THREE-D  SCROLLABLE 
+         BGCOLOR 8 FGCOLOR 0 FONT 4
+         TITLE "Ingreso al Sistema".
+
+
+/* *********************** Procedure Settings ************************ */
+
+&ANALYZE-SUSPEND _PROCEDURE-SETTINGS
+/* Settings for THIS-PROCEDURE
+   Type: DIALOG-BOX
+   Other Settings: COMPILE
+ */
+&ANALYZE-RESUME _END-PROCEDURE-SETTINGS
+
+
+/* ***************  Runtime Attributes and UIB Settings  ************** */
+
+&ANALYZE-SUSPEND _RUN-TIME-ATTRIBUTES
+/* SETTINGS FOR DIALOG-BOX W-INGRESO
+                                                                        */
+ASSIGN 
+       FRAME W-INGRESO:SCROLLABLE       = FALSE.
+
+/* _RUN-TIME-ATTRIBUTES-END */
+&ANALYZE-RESUME
+
+ 
+
+
+
+
+/* ************************  Control Triggers  ************************ */
+
+&Scoped-define SELF-NAME W-INGRESO
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL W-INGRESO W-INGRESO
+ON ENTRY OF FRAME W-INGRESO /* Ingreso al Sistema */
+DO:
+  APPLY "ENTRY":U TO S-USER-ID.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL W-INGRESO W-INGRESO
+ON GO OF FRAME W-INGRESO /* Ingreso al Sistema */
+DO:
+    ASSIGN x-password = s-clave
+        s-user-id     = CAPS( INPUT s-user-id ).
+    IF NOT SETUSERID(s-user-id, x-password, "DICTDB") 
+    THEN DO:
+        MESSAGE "Ingreso Incorrecto..." VIEW-AS ALERT-BOX ERROR.
+        IF veces > 1 THEN QUIT.
+        veces = veces + 1.
+        APPLY "ENTRY" TO s-user-id.
+        RETURN NO-APPLY.
+    END.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL W-INGRESO W-INGRESO
+ON WINDOW-CLOSE OF FRAME W-INGRESO /* Ingreso al Sistema */
+DO:
+  APPLY "END-ERROR":U TO SELF.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME b-cancelar
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL b-cancelar W-INGRESO
+ON CHOOSE OF b-cancelar IN FRAME W-INGRESO /* Cancelar */
+DO:
+    QUIT.
+    RETURN NO-APPLY.  
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME x-password
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL x-password W-INGRESO
+ON ANY-KEY OF x-password IN FRAME W-INGRESO /* Clave */
+DO:
+  S-CLAVE = SUBSTR(S-CLAVE + "           " , 1, LENGTH(SELF:SCREEN-VALUE)).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL x-password W-INGRESO
+ON ANY-PRINTABLE OF x-password IN FRAME W-INGRESO /* Clave */
+DO:
+  SUBSTR(S-CLAVE, SELF:CURSOR-OFFSET, 1) = CHR(LASTKEY).
+  APPLY "*" TO SELF.
+  RETURN NO-APPLY.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL x-password W-INGRESO
+ON ENTRY OF x-password IN FRAME W-INGRESO /* Clave */
+DO:
+  x-password:SCREEN-VALUE = "".
+  S-CLAVE = "".
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL x-password W-INGRESO
+ON RETURN OF x-password IN FRAME W-INGRESO /* Clave */
+DO:
+    APPLY "CHOOSE" TO b-acepta.
+    RETURN NO-APPLY.    
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&UNDEFINE SELF-NAME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _MAIN-BLOCK W-INGRESO 
+
+
+/* ***************************  Main Block  *************************** */
+
+/* Parent the dialog-box to the ACTIVE-WINDOW, if there is no parent.   */
+IF VALID-HANDLE(ACTIVE-WINDOW) AND FRAME {&FRAME-NAME}:PARENT eq ?
+THEN FRAME {&FRAME-NAME}:PARENT = ACTIVE-WINDOW.
+
+/* Add Trigger to equate WINDOW-CLOSE to END-ERROR                      */
+ON WINDOW-CLOSE OF FRAME {&FRAME-NAME} APPLY "END-ERROR":U TO SELF.
+
+/* Now enable the interface and wait for the exit condition.            */
+/* (NOTE: handle ERROR and END-KEY so cleanup code will always fire.    */
+
+MAIN-BLOCK:
+DO ON ERROR   UNDO MAIN-BLOCK, LEAVE MAIN-BLOCK
+   ON END-KEY UNDO MAIN-BLOCK, LEAVE MAIN-BLOCK:
+    RUN enable_UI.
+    s-user-id:SCREEN-VALUE = "".
+    x-password:SCREEN-VALUE = "".
+     
+    WAIT-FOR GO OF FRAME {&FRAME-NAME}.
+    RUN disable_UI.
+    RETURN.
+END.
+RUN disable_UI.
+RETURN ERROR.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+/* **********************  Internal Procedures  *********************** */
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE CREATE_USER W-INGRESO 
+PROCEDURE CREATE_USER :
+/*------------------------------------------------------------------------------
+  Purpose:     
+  Parameters:  <none>
+  Notes:       
+------------------------------------------------------------------------------*/
+/*
+    IF NOT CAN-FIND(DICTDB._USER WHERE DICTDB._USER._UserId = USERID("DICTDB"))
+    THEN DO:
+        CREATE DICTDB._USER.
+        ASSIGN DICTDB._USER._UserId   = USERID("DICTDB")
+               DICTDB._USER._Password = ENCODE("").
+           
+        IF SETUSERID(USERID("DICTDB"), "", "DICTDB") 
+        THEN RETURN ERROR.
+    END.
+    ELSE RETURN ERROR.
+*/
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE disable_UI W-INGRESO _DEFAULT-DISABLE
+PROCEDURE disable_UI :
+/*------------------------------------------------------------------------------
+  Purpose:     DISABLE the User Interface
+  Parameters:  <none>
+  Notes:       Here we clean-up the user-interface by deleting
+               dynamic widgets we have created and/or hide 
+               frames.  This procedure is usually called when
+               we are ready to "clean-up" after running.
+------------------------------------------------------------------------------*/
+  /* Hide all frames. */
+  HIDE FRAME W-INGRESO.
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE enable_UI W-INGRESO _DEFAULT-ENABLE
+PROCEDURE enable_UI :
+/*------------------------------------------------------------------------------
+  Purpose:     ENABLE the User Interface
+  Parameters:  <none>
+  Notes:       Here we display/view/enable the widgets in the
+               user-interface.  In addition, OPEN all queries
+               associated with each FRAME and BROWSE.
+               These statements here are based on the "Other 
+               Settings" section of the widget Property Sheets.
+------------------------------------------------------------------------------*/
+  DISPLAY S-User-Id x-password 
+      WITH FRAME W-INGRESO.
+  ENABLE RECT-2 IMAGE-1 RECT-1 S-User-Id x-password b-acepta b-cancelar B-ayuda 
+      WITH FRAME W-INGRESO.
+  {&OPEN-BROWSERS-IN-QUERY-W-INGRESO}
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+

@@ -1,0 +1,40 @@
+DEFINE VARIABLE i AS INTEGER     NO-UNDO.
+OUTPUT TO "D:/ccbcdocu.txt".
+    FOR EACH evtall03 NO-LOCK USE-INDEX Indice02
+        WHERE evtall03.codcia = 1 
+        AND NOT evtall03.codunico BEGINS "11111"
+        AND evtall03.codunico <> "20511358907"
+        BREAK BY vtaxmesmn DESC:
+        FOR EACH ccbcdocu WHERE ccbcdocu.codcia = 1
+            AND ccbcdocu.codcli = evtall03.codunico
+            AND ccbcdocu.fchdoc >= 09/26/2009
+            AND ccbcdocu.fchdoc <= 10/26/2009
+            AND LOOKUP(ccbcdocu.coddoc,'FAC,BOL,LET,N/C,N/D,TCK,BD') > 0
+            AND ccbcdocu.flgest <> "A" NO-LOCK:
+            PUT UNFORMATTED
+                ccbcdocu.codcia   "|"
+                ccbcdocu.coddoc   "|"
+                ccbcdocu.nrodoc   "|"
+                ISO-DATE(ccbcdocu.fchdoc)   "|"
+                ISO-DATE(ccbcdocu.fchvto)   "|"
+                ISO-DATE(ccbcdocu.fchcan)   "|"
+                ccbcdocu.codcli   "|"
+                ccbcdocu.nomcli   "|"
+                ccbcdocu.dircli   "|"
+                ccbcdocu.nroref   "|"
+                ccbcdocu.imptot   "|"
+                ccbcdocu.sdoact   "|"
+                ccbcdocu.flgest   "|"
+                ccbcdocu.codmon  skip.            
+        END.
+        i = i + 1.
+        IF i = 6 THEN LEAVE.
+    END.
+OUTPUT TO CLOSE.
+
+/*
+
+CodCia, CodDoc, NroDoc, FchDoc, FchVto, FchCan, CodCli, NomCli, DirCli,
+NroRef, ImpTot, SdoAct, FlgEst, CodMon 
+
+*/

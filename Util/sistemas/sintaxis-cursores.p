@@ -1,0 +1,14 @@
+DECLARE CURSOR_01 CURSO FOR
+    SELECT CODFAM, COUNT(*) 
+    FROM ALMSFAMI
+    WHERE CODCIA = 1 AND (CODFAM = '001' OR CODFAM = '010')
+    GROUP BY CODFAM.
+
+OPEN CURSOR_01.
+DEF VAR c_codfam AS CHAR.
+DEF VAR c_total  AS INTE.
+FETCH CURSOR_01 INTO c_codfam, c_total.
+REPEAT :
+    DISPLAY c_codfam c_total.
+    FETCH CURSOR_01 INTO c_codfam, c_total.
+END.

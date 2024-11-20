@@ -1,0 +1,1 @@
+  FIELD NroDoc LIKE CcbCDocu.NroDoc VALIDATE 

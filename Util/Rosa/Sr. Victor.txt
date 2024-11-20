@@ -1,0 +1,74 @@
+DEFINE TEMP-TABLE tt-datos
+    FIELDS t-codmat LIKE integral.almmmatg.codmat
+    FIELDS t-desmat LIKE integral.almmmatg.desmat
+    FIELDS t-desmar LIKE integral.almmmatg.desmar
+    FIELDS t-tpoart LIKE integral.almmmatg.tpoart
+    FIELDS t-nomcia AS CHAR
+    FIELDS t-undbas LIKE integral.almmmatg.undbas
+    FIELDS t-stkact AS DEC EXTENT 6 .
+
+
+FOR EACH integral.almmmate WHERE integral.almmmate.codcia = 1
+    AND LOOKUP(TRIM(integral.almmmate.codalm),"11,22,85") > 0 NO-LOCK,
+    FIRST integral.almmmatg OF integral.almmmate NO-LOCK:
+    FIND FIRST tt-datos WHERE t-codmat = integral.almmmate.codmat
+        NO-LOCK NO-ERROR.
+    IF NOT AVAIL tt-datos THEN DO:
+        CREATE tt-datos.
+        ASSIGN
+            t-codmat = integral.almmmate.codmat   
+            t-desmat = integral.almmmatg.desmat   
+            t-desmar = integral.almmmatg.desmar 
+            t-tpoart = integral.almmmatg.tpoart
+            t-nomcia = "CONTI".
+    END.
+
+    CASE integral.almmmate.codalm:
+        WHEN "11" THEN t-stkact[1] = t-stkact[1] + integral.Almmmate.StkAct.
+        WHEN "22" THEN t-stkact[2] = t-stkact[2] + integral.Almmmate.StkAct.
+        WHEN "85" THEN t-stkact[3] = t-stkact[3] + integral.Almmmate.StkAct.
+    END CASE.
+    
+END.
+
+FOR EACH cissac.almmmate WHERE cissac.almmmate.codcia = 1
+    AND LOOKUP(TRIM(cissac.almmmate.codalm),"11,22,85") > 0 NO-LOCK,
+    FIRST cissac.almmmatg OF cissac.almmmate NO-LOCK:
+    FIND FIRST tt-datos WHERE t-codmat = cissac.almmmate.codmat
+        NO-LOCK NO-ERROR.
+    IF NOT AVAIL tt-datos THEN DO:
+        CREATE tt-datos.
+        ASSIGN
+            t-codmat = cissac.almmmate.codmat   
+            t-desmat = cissac.almmmatg.desmat   
+            t-desmar = cissac.almmmatg.desmar   
+            t-tpoart = cissac.almmmatg.tpoart   
+            t-nomcia = "CISSAC".
+    END.
+    
+    t-nomcia = "CONTICISSAC".
+    CASE cissac.almmmate.codalm:
+        WHEN "11" THEN t-stkact[4] = t-stkact[4] + cissac.Almmmate.StkAct.
+        WHEN "22" THEN t-stkact[5] = t-stkact[5] + cissac.Almmmate.StkAct.
+        WHEN "85" THEN t-stkact[6] = t-stkact[6] + cissac.Almmmate.StkAct.
+    END CASE.
+    
+END.
+
+OUTPUT TO "D:/LisVic.txt".
+FOR EACH tt-datos:
+    PUT UNFORMATTED
+        t-codmat "|"
+        t-desmat "|"
+        t-desmar "|"
+        t-tpoart "|"
+        t-nomcia "|"
+        t-undbas "|"
+        t-stkact[1] "|"
+        t-stkact[2] "|"
+        t-stkact[3] "|"
+        t-stkact[4] "|"
+        t-stkact[5] "|"
+        t-stkact[6] SKIP.
+END.
+OUTPUT TO CLOSE.

@@ -1,0 +1,9 @@
+Div.|Cliente|Año|Mes|Fam|SubFam|Artículo - Descripción|Marca|Und Base|Cantidad|Importe
+'00000|'20100094054-SOLDEXA S.A.                         |     2,009|         1|'005|'017|'011527-PILAS  1500 AA BLT X 4 (CHICA)  |DURACELL|UNI     |        3.00
+'00000|'20100094054-SOLDEXA S.A.                         |     2,009|         1|'005|'017|'011524-PILAS  2400 AAA BLT X 4 (PEQUENA|DURACELL|UNI     |        1.00
+'00000|'20100094135-EXSA S.A.                            |     2,009|         1|'005|'017|'011524-PILAS  2400 AAA BLT X 4 (PEQUENA|DURACELL|UNI     |      105.00
+'00000|'20100094135-EXSA S.A.                            |     2,009|         1|'005|'017|'011527-PILAS  1500 AA BLT X 4 (CHICA)  |DURACELL|UNI     |      105.00
+'00000|'20202799745-NEON 2000 SAC                        |     2,009|         1|'005|'017|'011527-PILAS  1500 AA BLT X 4 (CHICA)  |DURACELL|UNI     |        3.00
+'00000|'20415090316-GRUPO FARMAKONSUMA S.A.              |     2,009|         1|'005|'017|'011612-PILAS  1604 9V BLT X 1 (BATERIA)|DURACELL|UNI     |        2.00
+'00000|'20508164191-CENTRAL MEDIA S.A.C.                 |     2,009|         1|'005|'021|'016579-TACHO PLASTICO P/OFICINA        |OMEGA   |UNI     |        4.00
+'00000|'20513004321-LA CAJA DE NEGOCIOS INMOBILIARIOS S.A|     2,009|         1|'005|'017|'011527-PILAS  1500 AA BLT X 4 (CHICA)  |DURACELL|UNI     |        4.00

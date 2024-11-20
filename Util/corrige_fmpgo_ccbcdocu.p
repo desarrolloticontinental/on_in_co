@@ -1,0 +1,14 @@
+FOR EACH CCBCDOCU WHERE
+    CODCIA = 1 AND
+    CODDOC = "FAC" AND
+    FCHDOC = 08/08/07 AND
+    NRODOC = "015094276" :
+    DISPLAY
+        CODCIA
+        CODDOC
+        NRODOC
+        FCHDOC
+        FLGEST
+        IMPTOT
+        FMAPGO.
+    UPDATE FMAPGO

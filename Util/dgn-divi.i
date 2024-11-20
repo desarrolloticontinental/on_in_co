@@ -1,0 +1,1 @@
+  FIELD CodDiv LIKE GN-DIVI.CodDiv VALIDATE 

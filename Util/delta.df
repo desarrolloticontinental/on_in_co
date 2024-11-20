@@ -1,0 +1,182 @@
+ADD TABLE "VtaTrack01"
+  AREA "Data Area"
+  LABEL "Ciclos del tracking"
+  DUMP-NAME "vtatrack01"
+  TABLE-TRIGGER "REPLICATION-DELETE" NO-OVERRIDE PROCEDURE "APLIC\Triggers\d-vtatrack01.p" CRC "?" 
+
+ADD FIELD "CodCia" OF "VtaTrack01" AS integer 
+  DESCRIPTION "Código de Compañia"
+  FORMAT "999"
+  INITIAL "0"
+  LABEL "Cia"
+  POSITION 2
+  MAX-WIDTH 4
+  COLUMN-LABEL "Cia"
+  HELP "Código de Compañia"
+  ORDER 10
+
+ADD FIELD "Ciclo" OF "VtaTrack01" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "Ciclo"
+  POSITION 3
+  MAX-WIDTH 10
+  ORDER 20
+
+ADD FIELD "Descrip" OF "VtaTrack01" AS character 
+  FORMAT "x(30)"
+  INITIAL ""
+  LABEL "Descripcion"
+  POSITION 4
+  MAX-WIDTH 60
+  ORDER 30
+
+ADD INDEX "Llave01" ON "VtaTrack01" 
+  AREA "Data Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "CodCia" ASCENDING 
+  INDEX-FIELD "Ciclo" ASCENDING 
+
+ADD TABLE "VtaTrack02"
+  AREA "Data Area"
+  LABEL "Definicion del ciclo"
+  DUMP-NAME "vtatrack02"
+
+ADD FIELD "CodCia" OF "VtaTrack02" AS integer 
+  DESCRIPTION "Código de Compañia"
+  FORMAT "999"
+  INITIAL "0"
+  LABEL "Cia"
+  POSITION 2
+  MAX-WIDTH 4
+  COLUMN-LABEL "Cia"
+  HELP "Código de Compañia"
+  ORDER 10
+
+ADD FIELD "Ciclo" OF "VtaTrack02" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "Ciclo"
+  POSITION 3
+  MAX-WIDTH 10
+  ORDER 20
+
+ADD FIELD "Orden" OF "VtaTrack02" AS integer 
+  FORMAT ">>>9"
+  INITIAL "0"
+  LABEL "Orden"
+  POSITION 4
+  MAX-WIDTH 4
+  ORDER 30
+
+ADD FIELD "CodUbic1" OF "VtaTrack02" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "Ubicacion"
+  POSITION 5
+  MAX-WIDTH 10
+  ORDER 40
+
+ADD FIELD "CodUbic2" OF "VtaTrack02" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  POSITION 6
+  MAX-WIDTH 10
+  ORDER 50
+
+ADD INDEX "Llave01" ON "VtaTrack02" 
+  AREA "Data Area"
+  UNIQUE
+  PRIMARY
+  INDEX-FIELD "CodCia" ASCENDING 
+  INDEX-FIELD "Ciclo" ASCENDING 
+  INDEX-FIELD "Orden" ASCENDING 
+
+ADD TABLE "VtaTrack03"
+  AREA "Data Area"
+  LABEL "Asignacion de ciclos"
+  DUMP-NAME "vtatrack03"
+
+ADD FIELD "CodCia" OF "VtaTrack03" AS integer 
+  DESCRIPTION "Código de Compañia"
+  FORMAT "999"
+  INITIAL "0"
+  LABEL "Cia"
+  POSITION 2
+  MAX-WIDTH 4
+  COLUMN-LABEL "Cia"
+  HELP "Código de Compañia"
+  ORDER 10
+
+ADD FIELD "CodDiv" OF "VtaTrack03" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "Divisionaria"
+  POSITION 3
+  MAX-WIDTH 10
+  COLUMN-LABEL "Div."
+  HELP "Ingrese el Codigo de Divisionaria"
+  ORDER 20
+
+ADD FIELD "CodDoc" OF "VtaTrack03" AS character 
+  DESCRIPTION "Codigo del documento"
+  FORMAT "x(3)"
+  INITIAL ""
+  LABEL "Codigo"
+  POSITION 4
+  MAX-WIDTH 6
+  COLUMN-LABEL "Codigo"
+  ORDER 30
+
+ADD FIELD "Ciclo" OF "VtaTrack03" AS character 
+  FORMAT "x(5)"
+  INITIAL ""
+  LABEL "Ciclo"
+  POSITION 5
+  MAX-WIDTH 10
+  ORDER 40
+
+ADD INDEX "LLave01" ON "VtaTrack03" 
+  AREA "Data Area"
+  PRIMARY
+  INDEX-FIELD "CodCia" ASCENDING 
+  INDEX-FIELD "CodDiv" ASCENDING 
+  INDEX-FIELD "CodDoc" ASCENDING 
+  INDEX-FIELD "Ciclo" ASCENDING 
+
+UPDATE TABLE "Almacen"
+  DESCRIPTION "Tabla de almacenes para sistemas  clínicos"
+
+UPDATE FIELD "UsrAct" OF "almcrepo"
+  DESCRIPTION "Usuario de actualizacion "
+
+UPDATE FIELD "Origen" OF "almdrepo"
+  DESCRIPTION "MAN: manual AUT: automatico"
+
+UPDATE FIELD "TipMat" OF "almrepos"
+  DESCRIPTION "P: producto propio T: producto de terceros"
+
+UPDATE TABLE "FacDPedi"
+  DESCRIPTION "   "
+
+UPDATE TABLE "gn-clie"
+  DESCRIPTION " "
+
+UPDATE FIELD "Origen" OF "gn-cliem"
+  DESCRIPTION "MAN: manual AUT: automatico"
+
+UPDATE FIELD "Tipo" OF "gn-cliem"
+  DESCRIPTION "S: bloquea la emision de factura N: solo mostrar el mensaje"
+
+UPDATE FIELD "FlgSit" OF "vtactrkped"
+  DESCRIPTION "I: inicio O: termino IO: inicio-termino"
+
+UPDATE FIELD "FlgSit" OF "vtadtrkped"
+  DESCRIPTION "I: inicio O: termino IO: inicio-termino"
+
+.
+PSC
+cpstream=ISO8859-1
+.
+0000003877

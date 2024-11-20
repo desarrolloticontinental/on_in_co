@@ -1,0 +1,120 @@
+&ANALYZE-SUSPEND _VERSION-NUMBER UIB_v8r12
+/* Procedure Description
+"UIB, Inicialización de variable compartidas"
+*/
+&ANALYZE-RESUME
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _DEFINITIONS Procedure 
+/*--------------------------------------------------------------------------
+    File        : 
+    Purpose     :
+
+    Syntax      :
+
+    Description :
+
+    Author(s)   :
+    Created     :
+    Notes       :
+  ------------------------------------------------------------------------*/
+/*          This .W file was created with the Progress UIB.             */
+/*----------------------------------------------------------------------*/
+
+/* ***************************  Definitions  ************************** */
+DEFINE NEW GLOBAL SHARED VARIABLE s-admin     AS LOGICAL   FORMAT "Si/No".
+DEFINE NEW GLOBAL SHARED VARIABLE s-codcia    AS INTEGER   FORMAT "999".
+
+DEFINE NEW GLOBAL SHARED VARIABLE cb-codcia    AS INTEGER   FORMAT "999".
+DEFINE NEW GLOBAL SHARED VARIABLE cl-codcia    AS INTEGER   FORMAT "999".
+DEFINE NEW GLOBAL SHARED VARIABLE pv-codcia    AS INTEGER   FORMAT "999".
+DEFINE NEW GLOBAL SHARED VARIABLE s-OPSYs     AS CHAR.
+
+DEFINE NEW GLOBAL SHARED VARIABLE s-ruccia    AS INTEGER   FORMAT "99999999".
+DEFINE NEW GLOBAL SHARED VARIABLE s-nomcia    AS CHARACTER FORMAT "X(50)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-dircia    AS CHARACTER FORMAT "X(50)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-user-id   AS CHARACTER FORMAT "X(16)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-aplic-id  AS CHARACTER FORMAT "X(3)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-prog-name AS CHARACTER FORMAT "X(20)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-seguridad AS CHARACTER FORMAT "X(20)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-nomcia1   AS CHARACTER FORMAT "X(60)".
+DEFINE NEW GLOBAL SHARED VARIABLE s-local     AS CHARACTER FORMAT "X(5)".
+
+DEFINE NEW GLOBAL SHARED VARIABLE s-pagina-final     AS INTEGER.
+DEFINE NEW GLOBAL SHARED VARIABLE s-pagina-inicial   AS INTEGER.
+DEFINE NEW GLOBAL SHARED VARIABLE s-salida-impresion AS INTEGER.
+DEFINE NEW GLOBAL SHARED VARIABLE s-printer-name     AS CHARACTER.
+DEFINE NEW GLOBAL SHARED VARIABLE s-print-file       AS CHARACTER.
+
+DEFINE NEW GLOBAL SHARED VARIABLE input-var-1 AS CHARACTER.
+DEFINE NEW GLOBAL SHARED VARIABLE input-var-2 AS CHARACTER.
+DEFINE NEW GLOBAL SHARED VARIABLE input-var-3 AS CHARACTER.
+DEFINE NEW GLOBAL SHARED VARIABLE output-var-1 AS ROWID.
+DEFINE NEW GLOBAL SHARED VARIABLE output-var-2 AS CHARACTER.
+DEFINE NEW GLOBAL SHARED VARIABLE output-var-3 AS CHARACTER.
+DEFINE NEW GLOBAL SHARED VARIABLE M-NIVEL AS INTEGER.
+DEFINE NEW GLOBAL SHARED VARIABLE N-NIVEL AS INTEGER.
+
+DEFINE NEW GLOBAL SHARED VARIABLE hSocket AS HANDLE NO-UNDO.
+
+/* CONFIGURACIONES DE ENTORNO POR DEFECTO */
+SESSION:DATA-ENTRY-RETURN = YES.    /* << OJO actua como si fuera TAB */
+SESSION:APPL-ALERT-BOXES  = TRUE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-PREPROCESSOR-BLOCK 
+
+/* ********************  Preprocessor Definitions  ******************** */
+
+&Scoped-define PROCEDURE-TYPE Procedure
+&Scoped-define DB-AWARE no
+
+
+
+/* _UIB-PREPROCESSOR-BLOCK-END */
+&ANALYZE-RESUME
+
+
+
+/* *********************** Procedure Settings ************************ */
+
+&ANALYZE-SUSPEND _PROCEDURE-SETTINGS
+/* Settings for THIS-PROCEDURE
+   Type: Procedure
+   Allow: 
+   Frames: 0
+   Add Fields to: Neither
+   Other Settings: CODE-ONLY COMPILE
+ */
+&ANALYZE-RESUME _END-PROCEDURE-SETTINGS
+
+/* *************************  Create Window  ************************** */
+
+&ANALYZE-SUSPEND _CREATE-WINDOW
+/* DESIGN Window definition (used by the UIB) 
+  CREATE WINDOW Procedure ASSIGN
+         HEIGHT             = 3.85
+         WIDTH              = 40.
+/* END WINDOW DEFINITION */
+                                                                        */
+&ANALYZE-RESUME
+
+ 
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _MAIN-BLOCK Procedure 
+
+
+/* ***************************  Main Block  *************************** */
+ASSIGN
+    s-admin    = TRUE
+    s-codcia   = 001
+    s-nomcia   = "VALMIESA"
+    s-nomcia1  = "VALMIESA"
+    s-aplic-id = "PL".
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+

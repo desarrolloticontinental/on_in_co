@@ -1,0 +1,9 @@
+
+DEF VAR X AS INT64 NO-UNDO.
+
+X = ETIME(YES).
+
+FOR EACH almmmatg NO-LOCK WHERE codcia = 1:
+END.
+
+MESSAGE ETIME / 1000.

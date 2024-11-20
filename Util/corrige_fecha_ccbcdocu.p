@@ -1,0 +1,13 @@
+FOR EACH CCBCDOCU WHERE
+    CODCIA = 1 AND
+    CODDOC = "FAC" AND
+    FCHDOC = TODAY AND
+    NRODOC >= "015116615" AND
+    NRODOC <= "015116615" BY NRODOC:
+    FCHDOC = 09/20/10.
+    DISPLAY
+        CODCIA
+        CODDOC
+        NRODOC
+        FCHDOC
+        

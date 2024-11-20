@@ -1,0 +1,118 @@
+DEFINE TEMP-TABLE tmp-tabla
+    FIELDS tmp-codmat LIKE evtarti.codmat
+    FIELDS tmp-desmat LIKE almmmatg.desmat
+    FIELDS tmp-coddiv LIKE evtarti.coddiv
+    FIELDS tmp-nrofch LIKE evtarti.nrofch
+    FIELDS tmp-qtydia LIKE EvtArti.Canxdia
+    FIELDS tmp-qtymat LIKE evtarti.CanxMes
+    FIELDS tmp-impvta LIKE evtarti.vtaxmesmn
+    FIELDS tmp-impmne LIKE evtarti.vtaxmesme.
+    
+OUTPUT TO "D:/EvtArti1.txt".
+FOR EACH gn-divi WHERE gn-divi.codcia = 1 NO-LOCK:
+    FOR EACH Almmmatg WHERE Almmmatg.CodCia = 1
+        AND Almmmatg.CodFam = "010" ,
+        EACH evtarti USE-INDEX Llave01
+            WHERE EvtArti.CodCia = 1
+            AND evtarti.CodMat = Almmmatg.CodMat
+            AND evtarti.coddiv = gn-divi.coddiv
+            AND Evtarti.Nrofch >= 200812 
+            AND Evtarti.Nrofch <= 200903 NO-LOCK:
+
+            FIND FIRST tmp-tabla WHERE tmp-CodDiv = evtarti.CodDiv
+                AND tmp-codmat = evtarti.CodMat
+                AND tmp-nrofch = evtarti.nrofch NO-LOCK NO-ERROR.
+
+            IF NOT AVAIL tmp-tabla THEN DO:
+                CREATE tmp-tabla.
+                ASSIGN
+                    tmp-codmat = evtarti.codmat
+                    tmp-coddiv = evtarti.coddiv
+                    tmp-desmat = almmmatg.desmat
+                    tmp-nrofch = evtarti.nrofch.
+            END.    
+            ASSIGN
+                tmp-qtydia[1]  = tmp-qtydia[1]  + evtarti.canxdia[1] 
+                tmp-qtydia[2]  = tmp-qtydia[2]  + evtarti.canxdia[2] 
+                tmp-qtydia[3]  = tmp-qtydia[3]  + evtarti.canxdia[3] 
+                tmp-qtydia[4]  = tmp-qtydia[4]  + evtarti.canxdia[4] 
+                tmp-qtydia[5]  = tmp-qtydia[5]  + evtarti.canxdia[5] 
+                tmp-qtydia[6]  = tmp-qtydia[6]  + evtarti.canxdia[6] 
+                tmp-qtydia[7]  = tmp-qtydia[7]  + evtarti.canxdia[7] 
+                tmp-qtydia[8]  = tmp-qtydia[8]  + evtarti.canxdia[8] 
+                tmp-qtydia[9]  = tmp-qtydia[9]  + evtarti.canxdia[9] 
+                tmp-qtydia[10] = tmp-qtydia[10] + evtarti.canxdia[10]
+                tmp-qtydia[11] = tmp-qtydia[11] + evtarti.canxdia[11]
+                tmp-qtydia[12] = tmp-qtydia[12] + evtarti.canxdia[12]
+                tmp-qtydia[13] = tmp-qtydia[13] + evtarti.canxdia[13]
+                tmp-qtydia[14] = tmp-qtydia[14] + evtarti.canxdia[14]
+                tmp-qtydia[15] = tmp-qtydia[15] + evtarti.canxdia[15]
+                tmp-qtydia[16] = tmp-qtydia[16] + evtarti.canxdia[16]
+                tmp-qtydia[17] = tmp-qtydia[17] + evtarti.canxdia[17]
+                tmp-qtydia[18] = tmp-qtydia[18] + evtarti.canxdia[18]
+                tmp-qtydia[19] = tmp-qtydia[19] + evtarti.canxdia[19]
+                tmp-qtydia[20] = tmp-qtydia[20] + evtarti.canxdia[20]
+                tmp-qtydia[21] = tmp-qtydia[21] + evtarti.canxdia[21]
+                tmp-qtydia[22] = tmp-qtydia[22] + evtarti.canxdia[22]
+                tmp-qtydia[23] = tmp-qtydia[23] + evtarti.canxdia[23]
+                tmp-qtydia[24] = tmp-qtydia[24] + evtarti.canxdia[24]
+                tmp-qtydia[25] = tmp-qtydia[25] + evtarti.canxdia[25]
+                tmp-qtydia[26] = tmp-qtydia[26] + evtarti.canxdia[26]
+                tmp-qtydia[27] = tmp-qtydia[27] + evtarti.canxdia[27]
+                tmp-qtydia[28] = tmp-qtydia[28] + evtarti.canxdia[28]
+                tmp-qtydia[29] = tmp-qtydia[29] + evtarti.canxdia[29]
+                tmp-qtydia[30] = tmp-qtydia[30] + evtarti.canxdia[30]
+                tmp-qtydia[31] = tmp-qtydia[31] + evtarti.canxdia[31]
+                tmp-qtymat = tmp-qtymat + evtarti.canxmes
+                tmp-impvta = tmp-impvta + evtarti.vtaxmesmn
+                tmp-impmne = tmp-impmne + evtarti.vtaxmesme.
+    END.
+END.
+
+PUT UNFORMATTED "CodMat|DesMat|Division|Cantidad|Venta S/. |Venta $" SKIP.
+FOR EACH tmp-tabla 
+    BREAK BY tmp-codmat BY tmp-coddiv BY tmp-nrofch:
+    PUT UNFORMATTED
+        tmp-codmat  "|"
+        tmp-desmat  "|"
+        tmp-coddiv  "|"
+        SUBSTRING(STRING(tmp-nrofch),5)  "|"
+        SUBSTRING(STRING(tmp-nrofch),1,4)  "|"
+        tmp-qtydia[1]  "|"
+        tmp-qtydia[2]  "|"
+        tmp-qtydia[3]  "|"
+        tmp-qtydia[4]  "|"
+        tmp-qtydia[5]  "|"
+        tmp-qtydia[6]  "|"
+        tmp-qtydia[7]  "|"
+        tmp-qtydia[8]  "|"
+        tmp-qtydia[9]  "|"
+        tmp-qtydia[10] "|"
+        tmp-qtydia[11] "|"
+        tmp-qtydia[12] "|"
+        tmp-qtydia[13] "|"
+        tmp-qtydia[14] "|"
+        tmp-qtydia[15] "|"
+        tmp-qtydia[16] "|"
+        tmp-qtydia[17] "|"  
+        tmp-qtydia[18] "|" 
+        tmp-qtydia[19] "|" 
+        tmp-qtydia[20] "|" 
+        tmp-qtydia[21] "|" 
+        tmp-qtydia[22] "|" 
+        tmp-qtydia[23] "|" 
+        tmp-qtydia[24] "|" 
+        tmp-qtydia[25] "|" 
+        tmp-qtydia[26] "|" 
+        tmp-qtydia[27] "|" 
+        tmp-qtydia[28] "|" 
+        tmp-qtydia[29] "|" 
+        tmp-qtydia[30] "|" 
+        tmp-qtydia[31]         /*
+        tmp-qtymat  "|"
+        tmp-impvta  "|"
+        tmp-impmne*/  SKIP.
+END.
+OUTPUT TO CLOSE.
+    
+

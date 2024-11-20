@@ -1,0 +1,799 @@
+&ANALYZE-SUSPEND _VERSION-NUMBER UIB_v8r12 GUI ADM1
+/* Procedure Description
+"Calculadora"
+*/
+&ANALYZE-RESUME
+&Scoped-define WINDOW-NAME CURRENT-WINDOW
+&Scoped-define FRAME-NAME D-Dialog
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _DEFINITIONS D-Dialog 
+/*------------------------------------------------------------------------
+
+  File: 
+
+  Description: from cntnrdlg.w - ADM SmartDialog Template
+
+  Input Parameters:
+      <none>
+
+  Output Parameters:
+      <none>
+
+  Author: 
+
+  Created: 
+------------------------------------------------------------------------*/
+/*          This .W file was created with the Progress UIB.             */
+/*----------------------------------------------------------------------*/
+
+/* Create an unnamed pool to store all the widgets created 
+     by this procedure. This is a good default which assures
+     that this procedure's triggers and internal procedures 
+     will execute in this procedure's storage, and that proper
+     cleanup will occur on deletion of the procedure. */
+
+CREATE WIDGET-POOL.
+
+/* ***************************  Definitions  ************************** */
+
+/* Parameters Definitions ---                                           */
+
+/* Local Variable Definitions ---                                       */
+define variable operation  as char initial " "  NO-UNDO.  /* last operation*/
+define variable clear_calc as Logic init False  NO-UNDO.  /* clear toggle  */
+define variable memory     as char              NO-UNDO.  /* last number   */
+define variable memory-MR  as char              NO-UNDO.  /* memoria       */
+define variable tmp-DEC    as decimal           NO-UNDO.
+
+define variable ok-press   AS LOGICAL           NO-UNDO  INITIAL NO.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-PREPROCESSOR-BLOCK 
+
+/* ********************  Preprocessor Definitions  ******************** */
+
+&Scoped-define PROCEDURE-TYPE SmartDialog
+&Scoped-define DB-AWARE no
+
+&Scoped-define ADM-CONTAINER DIALOG-BOX
+
+/* Name of designated FRAME-NAME and/or first browse and/or first query */
+&Scoped-define FRAME-NAME D-Dialog
+
+/* Standard List Definitions                                            */
+&Scoped-Define ENABLED-OBJECTS RECT-1 RECT-2 NUMBER BUTTON-BACK BUTTON-CE ~
+BUTTON-C BUTTON-MC BUTTON-7 BUTTON-8 BUTTON-9 BUTTON-DIV BUTTON-sqrt ~
+BUTTON-4 BUTTON-5 BUTTON-6 BUTTON-MUL BUTTON-PORC BUTTON-MS BUTTON-1 ~
+BUTTON-2 BUTTON-3 BUTTON-RESTA BUTTON-INV BUTTON-SIGNO BUTTON-MSUMA ~
+BUTTON-0 BUTTON-PUNTO BUTTON-SUMA BUTTON-IGUAL BUTTON-OK BUTTON-CANCEL ~
+BUTTON-AYUDA 
+&Scoped-Define DISPLAYED-OBJECTS NUMBER 
+
+/* Custom List Definitions                                              */
+/* List-1,List-2,List-3,List-4,List-5,List-6                            */
+
+/* _UIB-PREPROCESSOR-BLOCK-END */
+&ANALYZE-RESUME
+
+
+
+/* ***********************  Control Definitions  ********************** */
+
+/* Define a dialog box                                                  */
+
+/* Definitions of the field level widgets                               */
+DEFINE BUTTON BUTTON-0 
+     LABEL "0" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-1 
+     LABEL "1" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-2 
+     LABEL "2" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-3 
+     LABEL "3" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-4 
+     LABEL "4" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-5 
+     LABEL "5" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-6 
+     LABEL "6" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-7 
+     LABEL "7" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-8 
+     LABEL "8" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-9 
+     LABEL "9" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-AYUDA 
+     LABEL "A&yuda" 
+     SIZE 11 BY .81.
+
+DEFINE BUTTON BUTTON-BACK 
+     LABEL "Back" 
+     SIZE 7 BY 1.08.
+
+DEFINE BUTTON BUTTON-C 
+     LABEL "C" 
+     SIZE 7 BY 1.08.
+
+DEFINE BUTTON BUTTON-CANCEL AUTO-END-KEY 
+     LABEL "&Cancelar" 
+     SIZE 11 BY .81.
+
+DEFINE BUTTON BUTTON-CE 
+     LABEL "CE" 
+     SIZE 7 BY 1.08.
+
+DEFINE BUTTON BUTTON-DIV 
+     LABEL "/" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-IGUAL 
+     LABEL "=" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-INV 
+     LABEL "1/x" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-MC 
+     LABEL "MC" 
+     SIZE 5.14 BY 1.08
+     FGCOLOR 12 .
+
+DEFINE BUTTON BUTTON-MR 
+     LABEL "MR" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-MS 
+     LABEL "MS" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-MSUMA 
+     LABEL "M+" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-MUL 
+     LABEL "*" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-OK AUTO-GO 
+     LABEL "&Aceptar" 
+     SIZE 11 BY .81.
+
+DEFINE BUTTON BUTTON-PORC 
+     LABEL "%" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-PUNTO 
+     LABEL "." 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-RESTA 
+     LABEL "-" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-SIGNO 
+     LABEL "+/-" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-sqrt 
+     LABEL "sqrt" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE BUTTON BUTTON-SUMA 
+     LABEL "+" 
+     SIZE 5.14 BY 1.08.
+
+DEFINE VARIABLE NUMBER AS CHARACTER INITIAL "0" 
+     VIEW-AS EDITOR NO-WORD-WRAP
+     SIZE 35.57 BY 1
+     BGCOLOR 15 FGCOLOR 0  NO-UNDO.
+
+DEFINE RECTANGLE RECT-1
+     EDGE-PIXELS 4 GRAPHIC-EDGE  NO-FILL   
+     SIZE 38.86 BY .19.
+
+DEFINE RECTANGLE RECT-2
+     EDGE-PIXELS 4 GRAPHIC-EDGE  NO-FILL   
+     SIZE 38.86 BY .19.
+
+
+/* ************************  Frame Definitions  *********************** */
+
+DEFINE FRAME D-Dialog
+     NUMBER AT ROW 1.19 COL 2.29 NO-LABEL
+     BUTTON-BACK AT ROW 2.5 COL 15.72
+     BUTTON-CE AT ROW 2.5 COL 23.43
+     BUTTON-C AT ROW 2.5 COL 31.14
+     BUTTON-MC AT ROW 3.77 COL 2.57
+     BUTTON-7 AT ROW 3.77 COL 10
+     BUTTON-8 AT ROW 3.77 COL 15.72
+     BUTTON-9 AT ROW 3.77 COL 21.43
+     BUTTON-DIV AT ROW 3.77 COL 27.14
+     BUTTON-sqrt AT ROW 3.77 COL 33
+     BUTTON-MR AT ROW 5 COL 2.57
+     BUTTON-4 AT ROW 5 COL 10
+     BUTTON-5 AT ROW 5 COL 15.72
+     BUTTON-6 AT ROW 5 COL 21.43
+     BUTTON-MUL AT ROW 5 COL 27.14
+     BUTTON-PORC AT ROW 5 COL 33
+     BUTTON-MS AT ROW 6.27 COL 2.57
+     BUTTON-1 AT ROW 6.27 COL 10
+     BUTTON-2 AT ROW 6.27 COL 15.72
+     BUTTON-3 AT ROW 6.27 COL 21.43
+     BUTTON-RESTA AT ROW 6.27 COL 27.14
+     BUTTON-INV AT ROW 6.27 COL 33
+     BUTTON-SIGNO AT ROW 7.46 COL 15.72
+     BUTTON-MSUMA AT ROW 7.5 COL 2.57
+     BUTTON-0 AT ROW 7.5 COL 10
+     BUTTON-PUNTO AT ROW 7.5 COL 21.43
+     BUTTON-SUMA AT ROW 7.5 COL 27.14
+     BUTTON-IGUAL AT ROW 7.5 COL 33
+     BUTTON-OK AT ROW 9.23 COL 3
+     BUTTON-CANCEL AT ROW 9.23 COL 15.29
+     BUTTON-AYUDA AT ROW 9.23 COL 27.43
+     RECT-1 AT ROW 8.69 COL 1
+     RECT-2 AT ROW 10.31 COL 1
+     SPACE(0.00) SKIP(0.03)
+    WITH VIEW-AS DIALOG-BOX KEEP-TAB-ORDER 
+         SIDE-LABELS NO-UNDERLINE THREE-D  SCROLLABLE 
+         FONT 4
+         TITLE "Calculadora"
+         DEFAULT-BUTTON BUTTON-OK.
+
+
+/* *********************** Procedure Settings ************************ */
+
+&ANALYZE-SUSPEND _PROCEDURE-SETTINGS
+/* Settings for THIS-PROCEDURE
+   Type: SmartDialog
+   Allow: Basic,Browse,DB-Fields,Query,Smart
+   Other Settings: COMPILE
+ */
+&ANALYZE-RESUME _END-PROCEDURE-SETTINGS
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _INCLUDED-LIB D-Dialog 
+/* ************************* Included-Libraries *********************** */
+
+{src/adm/method/containr.i}
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+
+
+/* ***********  Runtime Attributes and AppBuilder Settings  *********** */
+
+&ANALYZE-SUSPEND _RUN-TIME-ATTRIBUTES
+/* SETTINGS FOR DIALOG-BOX D-Dialog
+   FRAME-NAME                                                           */
+ASSIGN 
+       FRAME D-Dialog:SCROLLABLE       = FALSE
+       FRAME D-Dialog:HIDDEN           = TRUE.
+
+/* SETTINGS FOR BUTTON BUTTON-MR IN FRAME D-Dialog
+   NO-ENABLE                                                            */
+ASSIGN 
+       NUMBER:READ-ONLY IN FRAME D-Dialog        = TRUE.
+
+/* _RUN-TIME-ATTRIBUTES-END */
+&ANALYZE-RESUME
+
+
+/* Setting information for Queries and Browse Widgets fields            */
+
+&ANALYZE-SUSPEND _QUERY-BLOCK DIALOG-BOX D-Dialog
+/* Query rebuild information for DIALOG-BOX D-Dialog
+     _Options          = "SHARE-LOCK"
+     _Query            is NOT OPENED
+*/  /* DIALOG-BOX D-Dialog */
+&ANALYZE-RESUME
+
+ 
+
+
+
+/* ************************  Control Triggers  ************************ */
+
+&Scoped-define SELF-NAME D-Dialog
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON BACKSPACE OF FRAME D-Dialog /* Calculadora */
+ANYWHERE
+DO:
+   RUN PRESS-KEY( "Back" ).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON CTRL-C OF FRAME D-Dialog /* Calculadora */
+ANYWHERE
+DO:
+  CLIPBOARD:VALUE = LEFT-TRIM(number).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON CTRL-V OF FRAME D-Dialog /* Calculadora */
+ANYWHERE
+DO:
+    assign tmp-dec = DECIMAL( CLIPBOARD:VALUE ) no-error.
+    IF NOT ERROR-STATUS:ERROR
+    THEN DO:
+        number = CLIPBOARD:VALUE.
+        RUN Visor.
+    END.
+    ELSE BELL.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON CTRL-X OF FRAME D-Dialog /* Calculadora */
+ANYWHERE
+DO:
+    CLIPBOARD:VALUE = LEFT-TRIM(number).
+    number = "0".
+    RUN Visor.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON DELETE-CHARACTER OF FRAME D-Dialog /* Calculadora */
+DO:
+  RUN PRESS-KEY( "CE" ).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON END-ERROR OF FRAME D-Dialog /* Calculadora */
+DO:
+  RUN PRESS-KEY( "C" ).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON RETURN OF FRAME D-Dialog /* Calculadora */
+ANYWHERE
+DO:
+  RUN PRESS-KEY( "=" ).
+END.
+
+ON "ANY-PRINTABLE":U ANYWHERE
+DO:
+    RUN PRESS-KEY( CHR( LASTKEY ) ).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL D-Dialog D-Dialog
+ON WINDOW-CLOSE OF FRAME D-Dialog /* Calculadora */
+DO:  
+  /* Add Trigger to equate WINDOW-CLOSE to END-ERROR. */
+  APPLY "END-ERROR":U TO SELF.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-9
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-9 D-Dialog
+ON CHOOSE OF BUTTON-9 IN FRAME D-Dialog /* 9 */
+OR "CHOOSE":U OF BUTTON-0
+OR "CHOOSE":U OF BUTTON-1
+OR "CHOOSE":U OF BUTTON-2
+OR "CHOOSE":U OF BUTTON-3
+OR "CHOOSE":U OF BUTTON-4
+OR "CHOOSE":U OF BUTTON-5
+OR "CHOOSE":U OF BUTTON-6
+OR "CHOOSE":U OF BUTTON-7
+OR "CHOOSE":U OF BUTTON-8
+OR "CHOOSE":U OF BUTTON-PUNTO
+OR "CHOOSE":U OF BUTTON-SUMA
+OR "CHOOSE":U OF BUTTON-RESTA
+OR "CHOOSE":U OF BUTTON-MUL
+OR "CHOOSE":U OF BUTTON-DIV
+OR "CHOOSE":U OF BUTTON-PORC
+OR "CHOOSE":U OF BUTTON-C
+OR "CHOOSE":U OF BUTTON-CE
+OR "CHOOSE":U OF BUTTON-SQRT
+OR "CHOOSE":U OF BUTTON-SIGNO
+OR "CHOOSE":U OF BUTTON-INV
+OR "CHOOSE":U OF BUTTON-IGUAL
+OR "CHOOSE":U OF BUTTON-BACK
+DO:
+    RUN PRESS-KEY ( SELF:LABEL ).
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-CANCEL
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-CANCEL D-Dialog
+ON CHOOSE OF BUTTON-CANCEL IN FRAME D-Dialog /* Cancelar */
+DO:
+  NUMBER = ?.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-MC
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-MC D-Dialog
+ON CHOOSE OF BUTTON-MC IN FRAME D-Dialog /* MC */
+DO:
+   memory-MR = "0".
+   BUTTON-MR:SENSITIVE = DECIMAL( memory-MR ) <> 0.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-MR
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-MR D-Dialog
+ON CHOOSE OF BUTTON-MR IN FRAME D-Dialog /* MR */
+DO:
+   number = LEFT-TRIM( memory-MR ).
+   RUN Visor.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-MS
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-MS D-Dialog
+ON CHOOSE OF BUTTON-MS IN FRAME D-Dialog /* MS */
+DO:
+   memory-MR = number:screen-value.
+   BUTTON-MR:SENSITIVE = DECIMAL( memory-MR ) <> 0.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-MSUMA
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-MSUMA D-Dialog
+ON CHOOSE OF BUTTON-MSUMA IN FRAME D-Dialog /* M+ */
+DO:
+   memory-MR = string(decimal(memory-MR) + decimal(number:screen-value)).
+   BUTTON-MR:SENSITIVE = DECIMAL( memory-MR ) <> 0.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&Scoped-define SELF-NAME BUTTON-OK
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CONTROL BUTTON-OK D-Dialog
+ON CHOOSE OF BUTTON-OK IN FRAME D-Dialog /* Aceptar */
+DO:
+  OK-PRESS = YES.
+END.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&UNDEFINE SELF-NAME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _MAIN-BLOCK D-Dialog 
+
+
+/* ***************************  Main Block  *************************** */
+
+{src/adm/template/dialogmn.i}
+
+IF OK-PRESS
+THEN DO:
+        NUMBER = LEFT-TRIM( NUMBER ).
+        RETURN NUMBER.
+    END.
+ELSE RETURN ERROR.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+/* **********************  Internal Procedures  *********************** */
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE adm-create-objects D-Dialog  _ADM-CREATE-OBJECTS
+PROCEDURE adm-create-objects :
+/*------------------------------------------------------------------------------
+  Purpose:     Create handles for all SmartObjects used in this procedure.
+               After SmartObjects are initialized, then SmartLinks are added.
+  Parameters:  <none>
+------------------------------------------------------------------------------*/
+
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE adm-row-available D-Dialog  _ADM-ROW-AVAILABLE
+PROCEDURE adm-row-available :
+/*------------------------------------------------------------------------------
+  Purpose:     Dispatched to this procedure when the Record-
+               Source has a new row available.  This procedure
+               tries to get the new row (or foriegn keys) from
+               the Record-Source and process it.
+  Parameters:  <none>
+------------------------------------------------------------------------------*/
+
+  /* Define variables needed by this internal procedure.             */
+  {src/adm/template/row-head.i}
+
+  /* Process the newly available records (i.e. display fields,
+     open queries, and/or pass records on to any RECORD-TARGETS).    */
+  {src/adm/template/row-end.i}
+
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE disable_UI D-Dialog  _DEFAULT-DISABLE
+PROCEDURE disable_UI :
+/*------------------------------------------------------------------------------
+  Purpose:     DISABLE the User Interface
+  Parameters:  <none>
+  Notes:       Here we clean-up the user-interface by deleting
+               dynamic widgets we have created and/or hide 
+               frames.  This procedure is usually called when
+               we are ready to "clean-up" after running.
+------------------------------------------------------------------------------*/
+  /* Hide all frames. */
+  HIDE FRAME D-Dialog.
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE enable_UI D-Dialog  _DEFAULT-ENABLE
+PROCEDURE enable_UI :
+/*------------------------------------------------------------------------------
+  Purpose:     ENABLE the User Interface
+  Parameters:  <none>
+  Notes:       Here we display/view/enable the widgets in the
+               user-interface.  In addition, OPEN all queries
+               associated with each FRAME and BROWSE.
+               These statements here are based on the "Other 
+               Settings" section of the widget Property Sheets.
+------------------------------------------------------------------------------*/
+  DISPLAY NUMBER 
+      WITH FRAME D-Dialog.
+  ENABLE RECT-1 RECT-2 NUMBER BUTTON-BACK BUTTON-CE BUTTON-C BUTTON-MC BUTTON-7 
+         BUTTON-8 BUTTON-9 BUTTON-DIV BUTTON-sqrt BUTTON-4 BUTTON-5 BUTTON-6 
+         BUTTON-MUL BUTTON-PORC BUTTON-MS BUTTON-1 BUTTON-2 BUTTON-3 
+         BUTTON-RESTA BUTTON-INV BUTTON-SIGNO BUTTON-MSUMA BUTTON-0 
+         BUTTON-PUNTO BUTTON-SUMA BUTTON-IGUAL BUTTON-OK BUTTON-CANCEL 
+         BUTTON-AYUDA 
+      WITH FRAME D-Dialog.
+  VIEW FRAME D-Dialog.
+  {&OPEN-BROWSERS-IN-QUERY-D-Dialog}
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE local-initialize D-Dialog 
+PROCEDURE local-initialize :
+/*------------------------------------------------------------------------------
+  Purpose:     Override standard ADM method
+  Notes:       
+------------------------------------------------------------------------------*/
+
+  /* Code placed here will execute PRIOR to standard behavior. */
+
+  /* Dispatch standard ADM method.                             */
+  RUN dispatch IN THIS-PROCEDURE ( INPUT 'initialize':U ) .
+
+  /* Code placed here will execute AFTER standard behavior.    */
+  run visor.
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE PRESS-KEY D-Dialog 
+PROCEDURE PRESS-KEY :
+/*------------------------------------------------------------------------------
+  Purpose:     
+  Parameters:  <none>
+  Notes:       
+------------------------------------------------------------------------------*/
+    DEFINE INPUT PARAMETER DIGITO AS CHARACTER.
+
+    number = LEFT-TRIM( number ).    
+    if CAN-DO("1,2,3,4,5,6,7,8,9,0",DIGITO) 
+    then DO WITH  FRAME {&FRAME-NAME}:
+        if clear_calc then number = "0".
+        number = if number = "0" then DIGITO
+                                 else number + DIGITO.
+        clear_calc = NO.
+     END.
+
+    /* If "." is pressed and is not already present, add it to number   */
+    if DIGITO = "." 
+    then DO WITH  FRAME {&FRAME-NAME}:
+        if 0=index(number,".") 
+        then DO:
+            if clear_calc then number = "0.".
+            number = if number = "0" then "0."
+                           else number + ".".
+            clear_calc = NO.
+        END.
+    END.
+
+    if DIGITO = "Back" 
+    then DO WITH  FRAME {&FRAME-NAME}:
+        if index(number,".") = LENGTH(number )
+        then number = SUBSTR( number, 1, LENGTH(number ) - 2).
+        else number = SUBSTR( number, 1, LENGTH(number ) - 1).
+        if number = "0" OR number = "" then number = "0".
+    END.
+    
+    /* CA will clear number and memory                                  */
+    if DIGITO="C" then DO:
+        number="0".
+        operation = " ".
+    END.
+    
+    /* C will clear the current number being displayed but retain memory        */
+    if DIGITO="CE" then number="0".
+    
+    if DIGITO="+/-" then        /* Switch signs  */
+        number = string(0 - decimal(number)).
+
+    if DIGITO="sqrt" then do:       /* Switch signs  */
+            assign number = string(sqrt(decimal(number))) no-error.
+            IF ERROR-STATUS:ERROR THEN number = ?.
+        end.
+        
+    if DIGITO="1/x" then do:       /* invertir  */
+            assign number = string(1 / decimal(number)) no-error.
+            IF ERROR-STATUS:ERROR THEN number = ?.
+        end.
+
+    if DIGITO = "*" then DIGITO = "X".
+    
+    if CAN-DO("=,+,-,/,X,%",DIGITO) 
+    then DO:
+        clear_calc = YES.
+        CASE operation:
+            WHEN " " OR WHEN "=" THEN DO: /* First operation */
+                operation = DIGITO.
+                memory = number.
+                END.
+            WHEN "+" THEN DO:
+                number = string(decimal(memory) + decimal(number)).
+                memory = number.
+                operation = DIGITO.
+                END.
+            WHEN "-" THEN DO:
+                number = string(decimal(memory) - decimal(number)).
+                memory = number.
+                operation = DIGITO.
+                END.
+            WHEN "/" THEN DO:
+                ASSIGN number = string(decimal(memory) / decimal(number)) NO-ERROR.                
+                IF ERROR-STATUS:ERROR THEN number = ?.
+                memory = number.
+                operation = DIGITO.
+                END.
+            WHEN "X" THEN DO:
+                number = string(decimal(memory) * decimal(number)).
+                memory = number.
+                operation = DIGITO.
+                END.
+            WHEN "%" THEN DO:
+                number = string(decimal(memory) * decimal(number) / 100).
+                memory = number.
+                operation = DIGITO.
+                END.
+        END CASE.
+    END.
+    run visor.
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE send-records D-Dialog  _ADM-SEND-RECORDS
+PROCEDURE send-records :
+/*------------------------------------------------------------------------------
+  Purpose:     Send record ROWID's for all tables used by
+               this file.
+  Parameters:  see template/snd-head.i
+------------------------------------------------------------------------------*/
+
+  /* SEND-RECORDS does nothing because there are no External
+     Tables specified for this SmartDialog, and there are no
+     tables specified in any contained Browse, Query, or Frame. */
+
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE state-changed D-Dialog 
+PROCEDURE state-changed :
+/* -----------------------------------------------------------
+  Purpose:     
+  Parameters:  <none>
+  Notes:       
+-------------------------------------------------------------*/
+  DEFINE INPUT PARAMETER p-issuer-hdl AS HANDLE NO-UNDO.
+  DEFINE INPUT PARAMETER p-state AS CHARACTER NO-UNDO.
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE VISOR D-Dialog 
+PROCEDURE VISOR :
+/*------------------------------------------------------------------------------
+  Purpose:     EL NUMERO ESTE FORMATEADO A LA IZQUIERDA
+  Parameters:  <none>
+  Notes:       
+------------------------------------------------------------------------------*/
+    DEFINE VARIABLE LENMAX AS INTEGER INITIAL 79.
+    IF number = ?
+    THEN  assign number:screen-value IN FRAME {&FRAME-NAME} =
+                 FILL( " ", LENMAX - 10 ) + "Error"
+          clear_calc = YES.
+    ELSE IF LENGTH( number ) < LENMAX
+         THEN ASSIGN
+            number = FILL( " ", LENMAX - 2 * LENGTH( number) ) + number
+            number:screen-value IN FRAME {&FRAME-NAME} = number.
+         
+END PROCEDURE.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+

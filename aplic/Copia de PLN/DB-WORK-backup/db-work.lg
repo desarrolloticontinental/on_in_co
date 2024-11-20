@@ -1,0 +1,27 @@
+
+                Tue Mar 24 12:36:25 2009
+[2009/03/24@12:36:25.271-0500] P-2392       T-3180  I DBUTIL   : (451)   prostrct create comienza sesión rhurtado en CON:. 
+[2009/03/24@12:36:25.303-0500] P-2392       T-3180  I DBUTIL   : (12862) Archivo de estructura O:\on_in_co\APLIC\PLN\db-work.st usado para crear la base de datos con tamaño de bloque 4096. 
+[2009/03/24@12:36:25.318-0500] P-2392       T-3180  I DBUTIL   : (334)   Fin de sesión prostrct create. 
+[2009/03/24@12:36:25.412-0500] P-2392       T-3180  I DBUTIL   : (451)   procopy comienza sesión rhurtado en CON:. 
+[2009/03/24@12:36:25.803-0500] P-2392       T-3180  I DBUTIL   : (334)   Fin de sesión procopy. 
+
+                Tue Mar 24 12:36:25 2009
+[2009/03/24@12:36:25.913-0500] P-2392       T-3180  I          : (451)   procopy get default SQL DBA comienza sesión rhurtado en CON:. 
+[2009/03/24@12:36:26.351-0500] P-2392       T-3180  I          : (334)   Fin de sesión procopy get default SQL DBA. 
+
+                Tue Mar 24 12:36:27 2009
+[2009/03/24@12:36:27.853-0500] P-4048       T-1080  I ABL      : (451)   Single-user comienza sesión rhurtado en CON:. 
+[2009/03/24@12:36:27.868-0500] P-4048       T-1080  I ABL      : (5326)  Comenzar fase rehacer física en 0 . 
+[2009/03/24@12:36:27.868-0500] P-4048       T-1080  I ABL      : (7161)  Fase rehacer física completa en bloque 0 desplazamiento 1098 actualización 0. 
+[2009/03/24@12:36:27.868-0500] P-4048       T-1080  I ABL      : (13547) Al final de Rehacer física, el tamaño de la tabla de transacciones es 1. 
+[2009/03/24@12:36:27.915-0500] P-4048       T-1080  I ABL      : (12699) Base de Datos db-work Opciones:  
+[2009/03/24@12:36:44.437-0500] P-4048       T-1080  I ABL      : (334)   Fin de sesión Single-user. 
+
+                Tue Mar 24 12:39:00 2009
+[2009/03/24@12:39:00.055-0500] P-360        T-2104  I ABL      : (451)   Single-user comienza sesión rhurtado en CON:. 
+[2009/03/24@12:39:00.071-0500] P-360        T-2104  I ABL      : (5326)  Comenzar fase rehacer física en 0 . 
+[2009/03/24@12:39:00.165-0500] P-360        T-2104  I ABL      : (7161)  Fase rehacer física completa en bloque 24 desplazamiento 2610 actualización 0. 
+[2009/03/24@12:39:00.165-0500] P-360        T-2104  I ABL      : (13547) Al final de Rehacer física, el tamaño de la tabla de transacciones es 1. 
+[2009/03/24@12:39:00.196-0500] P-360        T-2104  I ABL      : (12699) Base de Datos db-work Opciones:  
+[2009/03/24@12:40:09.022-0500] P-360        T-2104  I ABL      : (334)   Fin de sesión Single-user. 

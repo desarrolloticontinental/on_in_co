@@ -1,0 +1,14 @@
+
+OUTPUT TO "D:/dsctos.txt".    
+    PUT UNFORMATTED
+        "Clasificacion|Condicion Venta|Porcentaje Dscto|"
+        "Cierre 1| Cierre 2" SKIP.
+    FOR EACH dsctos NO-LOCK:
+        PUT UNFORMATTED 
+            Dsctos.clfCli   "|"
+            Dsctos.CndVta   "|"
+            Dsctos.PorDto   "|"
+            Dsctos.Cierre1  "|"
+            Dsctos.Cierre2  SKIP.
+    END.
+OUTPUT TO CLOSE.

@@ -1,0 +1,66 @@
+DEF VAR S-CODCIA AS INT INIT 001 NO-UNDO.
+DEF VAR S-NROMES AS INT INIT 03 NO-UNDO.
+DEF VAR S-PERIODO AS INT INIT 2008 NO-UNDO.
+DEF VAR X-CODPLN AS CHAR INIT '01' NO-UNDO.
+DEF VAR X-CODMOV AS CHAR NO-UNDO.
+DEF VAR X-IMPORTE AS DEC NO-UNDO.
+DEF VAR X-LINEA AS CHAR FORMAT 'X(100)' NO-UNDO.
+DEF VAR X-CODPER AS CHAR NO-UNDO.
+
+DEF TEMP-TABLE T-MOV LIKE PL-MOV-MES.
+
+INPUT FROM C:\TMP\alimentacion.prn.
+REPEAT:
+    IMPORT UNFORMATTED X-LINEA.
+    ASSIGN
+        X-CODPER = SUBSTRING(X-LINEA,1,6)
+        X-IMPORTE = DECIMAL(SUBSTRIN(X-LINEA,31,10))
+        X-CODMOV = '136'.
+    IF X-CODPER <> '' THEN DO:
+        RUN CARGA-CONCEPTO (X-CODMOV,X-IMPORTE).
+    END.
+END.
+INPUT CLOSE.
+RUN IMPORTA.
+
+PROCEDURE Carga-Concepto:
+/* ********************* */
+    DEF INPUT PARAMETER x-CodMov AS INT.
+    DEF INPUT PARAMETER x-Importe AS DEC.
+
+    CREATE T-MOV.
+    ASSIGN 
+        T-MOV.CodCia = s-CodCia
+        T-MOV.Periodo = s-Periodo
+        T-MOV.NroMes = s-NroMes
+        T-MOV.CodPln = INTEGER(x-CodPln)
+        T-MOV.CodCal = 0
+        T-MOV.CodPer = X-CodPer
+        T-MOV.FlgReg-Mes = Yes
+        T-MOV.CodMov = x-CodMov
+        T-MOV.ValCal-Mes = x-Importe.
+        
+END PROCEDURE.
+
+PROCEDURE Importa:
+/* ************* */
+  DEF VAR x-Cab AS CHAR NO-UNDO.
+  DEF VAR x-Det AS CHAR NO-UNDO.
+
+  FOR EACH T-MOV:
+    FIND integral.PL-MOV-MES WHERE INTEGRAL.PL-MOV-MES.CodCia = T-MOV.CodCia
+        AND INTEGRAL.PL-MOV-MES.Periodo = T-MOV.Periodo
+        AND INTEGRAL.PL-MOV-MES.NroMes = T-MOV.NroMes
+        AND INTEGRAL.PL-MOV-MES.codpln = T-MOV.CodPln
+        AND INTEGRAL.PL-MOV-MES.codcal = T-MOV.CodCal
+        AND INTEGRAL.PL-MOV-MES.codper = T-MOV.CodPer
+        AND INTEGRAL.PL-MOV-MES.CodMov = T-MOV.CodMov
+        EXCLUSIVE-LOCK NO-ERROR.
+/*    IF AVAILABLE PL-MOV-MES
+ *     THEN DISPLAY pl-mov-mes.codcal pl-mov-mes.codmov pl-mov-mes.codper t-mov.valcal-mes.*/
+    IF NOT AVAILABLE integral.PL-MOV-MES THEN CREATE integral.PL-MOV-MES.
+    BUFFER-COPY T-MOV TO integral.PL-MOV-MES
+        ASSIGN PL-MOV-MES.VALCAL-MES = PL-MOV-MES.VALCAL-MES + T-MOV.VALCAL-MES.
+  END.
+
+END PROCEDURE.

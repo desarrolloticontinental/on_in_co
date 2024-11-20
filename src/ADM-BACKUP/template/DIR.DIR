@@ -1,0 +1,25 @@
+g: brschnge.i         112   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: brsentry.i        3639   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: brsleave.i        2723  11.04.97  11:30   \sistemas\profast\src\adm\template
+g: bstates .i        1279   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: cntnrdlg.i       10735   1.04.97  14:11   \sistemas\profast\src\adm\template
+g: cntnrwin.i        2061   2.04.97  15:40   \sistemas\profast\src\adm\template
+g: dialogmn.i        1299   1.04.97  14:06   \sistemas\profast\src\adm\template
+g: find-tbl.i        1040   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: mlbasic .i        2680  28.03.95   5:53   \sistemas\profast\src\adm\template
+g: pnstates.i        2309   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: pustates.i        2847   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: qstates .i        1119   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: row-end .i         650   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: row-find.i        2111   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: row-get .i         253   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: row-head.i        2053   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: row-list.i         236   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: snd-end .i        1388   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: snd-head.i         451   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: snd-list.i         156   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: sndkycas.i         176   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: sndkyend.i         354   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: sndkytop.i         205   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: vstates .i         381   8.11.96  10:29   \sistemas\profast\src\adm\template
+g: windowmn.i        1571   4.06.97   8:56   \sistemas\profast\src\adm\template

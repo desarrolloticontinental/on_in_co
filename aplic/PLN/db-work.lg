@@ -1,0 +1,15 @@
+
+                Tue Jul 03 12:03:24 2018
+[2018/07/03@12:03:24.667-0500] P-4044       T-2476  I DBUTIL   : (451)   Inicio de sesión prostrct create para administrador en CON:. 
+[2018/07/03@12:03:24.714-0500] P-4044       T-2476  I DBUTIL   : (12862) El fichero de estructura d:\newsie\on_in_co\aplic\PLN\db-work.st usado para crear la base de datos con el blocksize 4096. 
+[2018/07/03@12:03:24.745-0500] P-4044       T-2476  I DBUTIL   : (334)   Fin de sesión prostrct create. 
+[2018/07/03@12:03:24.776-0500] P-4044       T-2476  I DBUTIL   : (451)   Inicio de sesión procopy para administrador en CON:. 
+[2018/07/03@12:03:25.073-0500] P-4044       T-2476  I DBUTIL   : (334)   Fin de sesión procopy. 
+
+                Tue Jul 03 12:03:26 2018
+[2018/07/03@12:03:26.886-0500] P-636        T-2940  I ABL      : (451)   Inicio de sesión Single-user para administrador en CON:. 
+[2018/07/03@12:03:26.886-0500] P-636        T-2940  I ABL      : (5326)  Comenzar la fase de la acción rehacer física en 0 . 
+[2018/07/03@12:03:26.886-0500] P-636        T-2940  I ABL      : (7161)  Fase de la acción rehacer física completada en blk 25 off 447 upd 0. 
+[2018/07/03@12:03:26.886-0500] P-636        T-2940  I ABL      : (13547) Al final de una acción rehacer física, el tamaño de la tabla de transacción es 1. 
+[2018/07/03@12:03:26.902-0500] P-636        T-2940  I ABL      : (12699) Base de datos db-work Opciones:  
+[2018/07/03@12:03:30.183-0500] P-636        T-2940  I ABL      : (334)   Fin de sesión Single-user. 

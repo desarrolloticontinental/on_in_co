@@ -1,0 +1,55 @@
+DEFINE TEMP-TABLE tmp-table
+    FIELDS coddoc LIKE ccbdcaja.coddoc
+    FIELDS nrodoc LIKE ccbdcaja.nrodoc
+    FIELDS impdoc LIKE ccbdcaja.imptot
+    FIELDS fchdoc LIKE ccbdcaja.fchdoc
+    FIELDS codref LIKE ccbcdocu.coddoc
+    FIELDS nroref LIKE ccbcdocu.nrodoc
+    FIELDS imptot LIKE ccbcdocu.imptot
+    FIELDS sdoact LIKE ccbcdocu.sdoact
+    FIELDS flgest LIKE ccbcdocu.flgest.
+
+OUTPUT TO "D:/Comisiones1.txt".
+FOR EACH ccbdcaja WHERE ccbdcaja.codcia = 1
+    AND ccbdcaja.fchdoc >= 09/26/2009
+    AND ccbdcaja.fchdoc <= 10/25/2009 NO-LOCK:
+    FIND ccbcdocu WHERE ccbcdocu.codcia = 1
+        AND ccbcdocu.coddoc = ccbdcaja.codref
+        AND ccbcdocu.nrodoc = ccbdcaja.nroref NO-LOCK NO-ERROR.
+    IF AVAIL ccbcdocu THEN DO:
+        FIND FIRST tmp-table WHERE tmp-table.codref = ccbdcaja.codref
+            AND tmp-table.nroref = ccbdcaja.nroref NO-LOCK NO-ERROR.
+        IF NOT AVAIL tmp-table THEN DO:
+            CREATE tmp-table.
+            ASSIGN
+                tmp-table.codref = ccbdcaja.codref
+                tmp-table.nroref = ccbdcaja.nroref
+                tmp-table.imptot = ccbcdocu.imptot
+                tmp-table.sdoact = ccbcdocu.sdoact
+                tmp-table.flgest = ccbcdocu.flgest.
+        END.
+        ASSIGN
+            tmp-table.coddoc = ccbdcaja.coddoc
+            tmp-table.nrodoc = ccbdcaja.nrodoc
+            tmp-table.impdoc = tmp-table.impdoc + ccbdcaja.imptot 
+            tmp-table.fchdoc = ccbdcaja.fchdoc.
+    END.
+END.
+
+FOR EACH tmp-table:
+    PUT UNFORMATTED
+        tmp-table.coddoc "|"
+        tmp-table.nrodoc "|"
+        tmp-table.impdoc "|"
+        tmp-table.fchdoc "|"
+        tmp-table.codref "|"
+        tmp-table.nroref "|"
+        tmp-table.imptot "|"
+        tmp-table.sdoact "|"
+        tmp-table.flgest SKIP.        
+END.
+OUTPUT TO CLOSE.
+
+
+
+

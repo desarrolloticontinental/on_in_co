@@ -1,0 +1,110 @@
+10002166823||Fernando Ramos Fernàndez 	                        |9.00|60,000||75,000||90,000
+20484101206||Comercial Karibian 	                            |9.00|25,000||38,000||50,000
+10002072667||Hipòlito Neyra Carrasco 	                        |9.00|30,000||40,000||50,000
+10035793521||Angel Kam Cruz	                                    |14.00|1,500,000||1,700,000|1,900,000|	
+20484287466||Negociaciones e Inversiones Felix	                |11.00|120,000||||	
+20484245976||Librería Universal Piura 	                        |11.00|180,000||205,000|235,000|	
+20525316671|20484245976|Representaciones Elena 	                |11.00|180,000||205,000|235,000|	
+10035955297||Kam Cruz Williams	                                |11.00|250,000||280,000|320,000|	
+10036789382||Elizabeth Zapata Delgado	                        |11.00|||||	
+20525734162|10036789382|Junior Distribuidores 	                |11.00|||||	
+20483570831||Cetamar Ventas y Servicios Generales 	            |9.00|||||	
+10166475762||Mario Viteri Fernández	                            |15.00|||||	
+20479934585||Producto Papelera El Oferton 	                    |11.00|||||	
+20395252756||Anubis 	                                        |11.00|||||	
+10164771771||Mario Viteri Robles 	                            |11.00|100,000||125,000|150,000|	
+20480618697|10164771771|Mario Viteri EIRL.	                    |11.00|100,000||125,000|150,000|	
+10164676001||Luis Diaz Sanchez 	                                |9.00|||60,000||80,000
+20480008350||Distribuciones Nueva Generacion 	                |9.00|||60,000||80,000
+10166938070||Evila Arrue Aurazo 	                            |9.00|||60,000||80,000
+20132051322||Copy Ventas	                                    |13.00|||1,400,000|1,600,000|	
+20440272593||Book Center	                                    |11.00|110,000||130,000|150,000|	
+20132254193||Punto Azul 	                                    |9.00|65,000||72,000||80,000
+10178304254||Tomàs Coronel Castañeda	                        |9.00|||60,000||80,000
+10180077761||Rodriguez Vasquez Ronald 	                        |9.00|||60,000||80,000
+10178901872||Manue Vega Lujan	                                |11.00|||||	
+20481150125||Servicios y Suministro Del Norte 	                |11.00|230,000||270,000|300,000|	
+10266278042||Hernandez Briceño Wilson 	                        |11.00|95,000||110,000|130,000|	
+20453595901|10266278042|Librería Hernandez  ( Libher ) 	        |11.00|95,000||110,000|130,000|	
+20411033458||H. & M Almacenes Generales	                        |11.00|300,000||340,000|380,000|	
+10266730123||Walter Oscar Chavarri Ruiz 	                    |9.00|||||	
+01026633302||Irma Huaman Gallardo 	                            |9.00|||60,000||80,000
+20268172000||Asociacion Educativa Davy	                        |9.00|||||	
+20445440168||Distribuidor Multicopias Servis	                |11.00|475,000||530,000|595,000|	
+10328389580||Maricruz Gámez Menacho	                            |11.00|580,000||660,000|740,000|	
+10328600221||Ponce Rodriguez Janeth 	                        |9.00|||60,000||80,000
+10156031149||Zapata Manrique	                                |11.00|250,000||280,000|320,000|	
+20486506351||Represent. General Pacifico 	                    |11.00|80,000||100,000|120,000|	
+20486012782||Negociaciones San Isidro del Centro 	            |11.00|220,000||260,000||300,000
+10210706220|20486012782|Isidro Gamboa Luis	                    |11.00|220,000||260,000||300,000
+20485985523|20486012782|Importadora y Distribuidora La Selva 	|11.00|220,000||260,000||300,000
+10200395609||Librería Distribuidora el Pueblo	                |9.00|||60,000||80,000
+10200098485||Sanchez Lazo Luis Alberto	                        |11.00|80,000||100,000|120,000|	
+20208752759||Librería Bazar Santa Maria 	                    |11.00|220,000||250,000|275,000|	
+10198634269||Josefa Casaña de Orchan 	                        |9.00|||60,000||80,000
+20486110792||Apex Sac. ( Jhonny Tupac Yupanqui )	            |9.00|||||	
+20447370272||Distrib. Librería Bazar Regalos Laureano	        |9.00|||60,000||80,000
+10199195391||Zenobio Cueva Borja 	                            |9.00|||60,000||80,000
+20487131491|10199195391|Distribuidor y MultiserviciosUniversal.	|9.00|||60,000||80,000
+20272467961||Luciano	                                        |15.00||3,400,000|3,800,000|4,250,000|	
+00104731986|20272467961|Callata	                                |15.00||3,400,000|3,800,000|4,250,000|	
+20100199158||ESTILOS SCRL	                                    |9.00|85,000||95,000||110,000
+10296235321||LUDWIG COLCA APAZA	                                |9.00|||50,000||80,000
+20454292881||INVNES. Y DISTRA. MONTESINOS S.R.L.	            |11.00|105,000||120,000|135,000|	
+20454004761||VICTORIA DISTRIBUCIONES EIRL.	                    |11.00|275,000||300,000|340,000|	
+20498030875||LIBRERÍA Y TIPOG  ORDOÑEZ 	                        |11.00|610,000||680,000|750,000|830,000
+10292313450||OCHOA VELASCO JAVIER 	                            |13.00|||||	
+20452231914||EINS PERU SAC. utiles de sistemas	                |9.00|||||	
+20452707340||DISTRIBUIDORA RHYGO EIRL.	                        |9.00|||||	
+20452756120||MULTISERVICIOS DISUM EIRL.	                        |9.00|||60,000||80,000
+20527984425||LIBRERÍA PAPELERIA FRAXI SAC.	                    |9.00|||60,000||80,000
+20527447411||LYLY¨S DISTRIBUCIONES SAC	                        |9.00|||50,000||80,000
+20399742821||REPRENES. GENLES.EL SOL S.A.	                    |11.00|200,000||220,000|250,000|	
+20114838790||PILAPLAS SAC.	                                    |13.00|350,000||390,000|440,000|	
+10238835963||ASENCIO CRUZ EUSEBIO 	                            |11.00|110,000||120,000|130,000|	
+20527975604||A.M.DISTRIBUIDORA EIRL.	                        |11.00|110,000||120,000|130,000|	
+20317082062||PLASTISCOS 2000 SRLTDA.	                        |11.00|150,000||175,000|200,000|	
+20489495687||CONSORCIO ALTIPLANO	                            |13.00|670,000||760,000|850,000|	
+17133759255||SULLUCO ALVARADO EINSTEIN ENRIQUE	                |9.00|||60,000||80,000
+10004796191||ILLATOPA MANTARI JOSE LUIS Andy Distrib	        |9.00|||50,000||80,000
+10046455008||MANTARI PAREDES DORIS	                            |9.00|||85,000||100,000
+20449422083|10004796191|ANDY  DISTRIBUCIONES  EIRL.	            |9.00|||50,000||80,000
+20362973105||BAZ. LIB. MATEEHI SRL.	                            |9.00|||95,000||110,000
+10052396218||LUIS TEJEDO HUAMÁN	                                |9.00|||60,000||80,000
+20180337122||LIB. LA CASTELLANA SRL.	                        |9.00|||60,000||80,000
+20408833044||DINEX EIR Ltda.	                                |11.00|100,000||110,000|125,000|	
+20103778892||NEGOCIOS DE LA SELVA SRL.	                        |9.00|||60,000||80,000
+20493283384||VARIEDADES JORDAN SRL.	                            |11.00|200,000||225,000|250,000|	
+20103984794||COPY CENTER SRL	                                |9.00|||60,000||80,000
+20531280092||REDICAL SAC 	                                    |9.00|||||	
+20480610521||EMPRESA COMERCIALIZADORA LA GRAN FAVORITA  EIRL	|11.00|200,000||225,000|250,000|	
+20406130488||INDUSTRIAS E IMPRESION LUCERO	                    |9.00|||||	
+20447849047||MIA MARKET  S.R.L.	                                |9.00|||||	
+20450126463||COMERCIAL CHACHA EIRL	                            |11.00|130,000||150,000|170,000|	
+20450156702||COMERCIAL PANCHITO SCRLTDA	                        |11.00|140,000||160,000|180,000|	
+20453694985||FOLIB CASTAÑEDA EIRL	                            |9.00|||||	
+20393124416||CASA LA VIRREYNA SAC.	                            |9.00|||60,000||80,000
+20393062801||ALMAPEL EIRL	                                    |9.00|78,000||85,000|100,000|	
+20128906054||COM.LIBRERÍA MARÍA AUXILIADORA	                    |9.00|||60,000||80,000
+20393160480||COMCIAL. LIB. “EMANUEL” EIRL	                    |9.00|||60,000||80,000
+20393171929|20128906054|MARIA AUXILIADORA INTERNACIONAL SRL	    |9.00|||60,000||80,000
+20406410847||CORPORACION DE VENTAS EIRL	                        |11.00|160,000||185,000|210,000|	
+20406472524||DIST.LIB.Y PAPE COTORRITA SRLTDA.	                |9.00|||60,000||80,000
+10403963769||NELY ROXANA QUISPE ENRIQUEZ	                    |9.00|||60,000||80,000
+10247021545||RAMOS LINARES EDWIN MARIO	                        |9.00|||60,000||80,000
+10247045479||ADOLFO VEGA BRAVO	                                |9.00|||60,000||80,000
+20449206976||LY R DISTRIBUCIONES EIRL-	                        |13.00|440,000||500,000|560,000|	
+10004105783|20449206976|JOSÉ LOMBARDI CARBAJAL	                |13.00|440,000||500,000|560,000|	
+10004384810||QUISPE TICONA JULIO	                            |9.00|||60,000||80,000
+10004730131||NINAJA ALE VICTOR	                                |11.00|100,000||115,000|130,000|	
+20449257376||DISTRIBUIDORA NOBLEZA EIRL. (Edgar)	            |11.00|130,000||145,000|170,000|	
+20119198713||LIBRERÍA DORA SANTA MARÍA	                        |9.00|||60,000||80,000
+20520007343||LIBRERÍA E IMPRENTA CONTINENTAL	                |11.00|225,000||255,000|295,000|	
+20520039113||DISTRIBUIDORA MUNDIAL EIRL.	                    |11.00|275,000||310,000|355,000|	
+20446423283||DISTRIBUIDORA YAVIL S.A.	                        |9.00|||80,000||100,000
+20104197354|20446423283|DISTRIBUIDORA LA FAMILIA EIRL	        |9.00|||80,000||100,000
+10010620088||CARLOS ESCUDERO SANDOVAL 	                        |11.00|||||	
+20488818318||DISTRIBUCIONES ELI SAC.	                        |9.00|||60,000||80,000
+10011103010||REATEGUI REAT CARLOS HUMBERTO	                    |9.00|||||	
+20129684691||CANAL HERMANOS SRL.	                            |9.00|||60,000||80,000
+10403923724|10166475762|Yunis Medina Edward Fabian	            ||||||	

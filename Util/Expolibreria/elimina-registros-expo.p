@@ -1,0 +1,60 @@
+/* RUTINAS DE BORRADO DE INFORMACION PARA EXPOLIBRERIA */
+/* TENER MUCHO CUIDADO DE NO BORRAR LA TABLA PRINCIPAL (INF210).
+    DEBES TENER SOLAMENTE ACTIVA LA TABLA DE EXPOLIBRERIA (INF220) */
+
+DISPLAY 'clientes'.
+PAUSE 0.
+DISABLE TRIGGERS FOR LOAD OF gn-clie.
+FOR EACH gn-clie WHERE codcia = 000:
+    DELETE gn-clie.
+END.
+
+DISABLE TRIGGERS FOR LOAD OF gn-clieb.
+FOR EACH gn-clieb:
+    DELETE gn-clieb.
+END.
+
+DISABLE TRIGGERS FOR LOAD OF gn-cliel.
+FOR EACH gn-cliel:
+    DELETE gn-cliel.
+END.
+
+DISABLE TRIGGERS FOR LOAD OF gn-cliem.
+FOR EACH gn-cliem:
+    DELETE gn-cliem.
+END.
+
+DISPLAY 'tarjetas'.
+PAUSE 0.
+DISABLE TRIGGERS FOR LOAD OF gn-card.
+FOR EACH gn-card:
+    DELETE gn-card.
+END.
+
+DISPLAY 'catalogo'.
+PAUSE 0.
+DISABLE TRIGGERS FOR LOAD OF almmmatg.
+FOR EACH almmmatg WHERE almmmatg.codcia = 001:
+    DELETE almmmatg.
+END.
+
+DISPLAY 'vendedores'.
+PAUSE 0.
+DISABLE TRIGGERS FOR LOAD OF gn-ven.
+FOR EACH gn-ven:
+    DELETE gn-ven.
+END.
+
+DISPLAY 'cotizaciones'.
+PAUSE 0.
+DISABLE TRIGGERS FOR LOAD OF faccpedi.
+FOR EACH faccpedi WHERE faccpedi.codcia = 001:
+    DELETE faccpedi.
+END.
+
+DISABLE TRIGGERS FOR LOAD OF facdpedi.
+FOR EACH facdpedi WHERE facdpedi.codcia = 001:
+    DELETE facdpedi.
+END.
+OUTPUT CLOSE.
+

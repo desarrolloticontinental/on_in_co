@@ -1,0 +1,403 @@
+/*------------------------------------------------------------------------
+    File       : adm/support/mktabs95.p
+    Purpose    : Create tabs for the given size text
+    Parameters : piTxtHeight
+                   - height in pixels of the font used (or tab icon if used
+                     and greater)
+                 piTxtWidth
+                   - width in pixels of the tab label text (or tab icon if
+                     used and greater)
+                 piTabBGColor
+                   - tab backgound Progress color number
+                 piFrmBGColor
+                   - frame backgound Progress color number (that is the
+                     frame that will contain the SmartTab95 object)
+                 pcStyle
+                   - currently only supports "Win95" look
+                 plOK
+                   TRUE  - tabs created OK
+                   FALSE - failed to create tabs
+    Notes      : Currently assumes Win95 style.
+               
+                 Locates in the following directory structure on the PROPATH
+                 (the user being responsible for actual directories locations)
+                   adm-free/support/Tab95
+                        /color0     (corresponding to Progress colors as
+                        /color1      defined by the piTabBGColor)
+                        ..
+                        ..
+                        /colorn
+                               /up
+                               /down
+                                    /wwwhhcc.bmp (where www = piTxtWidth
+                                                        nn  = piTxtHeight
+                                                        cc  = piFrmBGColor)
+                 If the directories connot be located on the PROPATH then
+                 this procedure will attemp to create them. To determine if
+                 the directories exist SEARCH() will be used to look for
+                 Tab95/search.ref.
+                  
+--------------------------------------------------------------------------*/
+
+/* ****************************  Definitions  *************************** */
+
+/* Parameters Definitions ---                                             */
+DEF INPUT  PARAM piTxtHeight  AS INT  NO-UNDO.
+DEF INPUT  PARAM piTxtWidth   AS INT  NO-UNDO.
+DEF INPUT  PARAM piTabBGColor AS INT  NO-UNDO.
+DEF INPUT  PARAM piFrmBGColor AS INT  NO-UNDO.
+DEF INPUT  PARAM pcStyle      AS CHAR NO-UNDO.
+DEF OUTPUT PARAM plOK         AS LOG  NO-UNDO.
+
+/* Local Variable Definitions ---                                         */
+DEF VAR piTabHeight   AS INT NO-UNDO.
+DEF VAR piTabWidth    AS INT NO-UNDO.
+DEF VAR piRndWidth    AS INT NO-UNDO.
+DEF VAR piClrIdxItems AS INT NO-UNDO.
+
+DEF VAR pcTabBmpDir AS CHAR NO-UNDO.
+DEF STREAM psBmp.
+
+/* ****************************  Main Block  **************************** */
+
+plOK = FALSE.
+
+RUN CheckDirStruct.
+IF ERROR-STATUS:ERROR THEN
+  RETURN ERROR.
+
+RUN CreateTabBmp (INPUT YES).
+IF ERROR-STATUS:ERROR THEN
+  RETURN ERROR.
+RUN CreateTabBmp (INPUT NO).
+IF ERROR-STATUS:ERROR THEN
+  RETURN ERROR.
+
+plOK = TRUE.
+RETURN.
+
+
+PROCEDURE CheckDirStruct :
+/*------------------------------------------------------------------------------
+  Purpose:     Check the directory structure exists .. if not set it up ..
+  Parameters:  <none>
+  Notes:       
+------------------------------------------------------------------------------*/
+
+  /*
+  ** Look for reference file
+  */
+  pcTabBmpDir = SEARCH("adm-free\support\Tab95\search.ref":U).
+  
+  IF pcTabBmpDir = ? THEN
+  DO:
+    /*
+    ** Create the initial dirs on the first entry on the propath
+    */
+    pcTabBmpDir =
+      RIGHT-TRIM(REPLACE(ENTRY(1, PROPATH), "/":U, "\":U), "\":U).
+    MESSAGE
+      "Could not find existing SmartTab95 supporting directory structure -"
+      "creating in"
+      pcTabBmpDir + "\adm-free\support\Tab95":U
+      VIEW-AS ALERT-BOX WARNING.
+    OS-CREATE-DIR VALUE(pcTabBmpDir + "\adm-free\support\Tab95":U).
+    IF OS-ERROR <> 0 THEN
+    DO:
+      MESSAGE "Failed to create directory structure !"
+        VIEW-AS ALERT-BOX ERROR.
+      RETURN ERROR.
+    END.
+    /*
+    ** From this point forward well assume things will be OK .. so
+    ** create the refrence file
+    */
+    OUTPUT TO VALUE(pcTabBmpDir + "\adm-free\support\Tab95\search.ref":U).
+    MESSAGE "SmartTab95":U.
+    OUTPUT CLOSE.        
+    pcTabBmpDir = SEARCH("adm-free\support\Tab95\search.ref":U).
+  END.
+  
+  /*
+  ** Now ensure the rest of the dir struct is there
+  */
+  ASSIGN
+    pcTabBmpDir =
+      SUBSTRING(pcTabBmpDir, 1, INDEX(pcTabBmpDir, "search.ref":U) - 1)
+    pcTabBmpDir = pcTabBmpDir + "color":U + STRING(piTabBGColor).
+  OS-CREATE-DIR VALUE(pcTabBmpDir).
+  IF OS-ERROR <> 0 THEN
+  DO:
+    MESSAGE "Failed to create directory structure !"
+      VIEW-AS ALERT-BOX ERROR.
+    RETURN ERROR.
+  END.
+  OS-CREATE-DIR VALUE(pcTabBmpDir + "\up":U).
+  OS-CREATE-DIR VALUE(pcTabBmpDir + "\down":U).
+
+  RETURN.
+  
+END PROCEDURE.
+
+PROCEDURE CreateTabBmp :
+/*------------------------------------------------------------------------------
+  Purpose:     Create the tab bitmap file
+  Parameters:  ilUp
+                 TRUE - tab up image
+                 TRUE - tab down image
+  Notes:       
+------------------------------------------------------------------------------*/
+DEF INPUT PARAM ilUp AS LOG NO-UNDO.
+
+DEF VAR icTabBmpFile AS CHAR NO-UNDO.
+DEF VAR iiRnd        AS INT  NO-UNDO.
+
+  /*
+  ** Assign the height and width of the tab
+  */
+  ASSIGN
+    piTabHeight = piTxtHeight + IF ilUp THEN 10 ELSE 7
+    piTabWidth = piTxtWidth + IF ilUp THEN 17 ELSE 12
+    piRndWidth = TRUNCATE(piTabWidth / 16, 0) * 16.
+  /*
+  ** Calc additional half bytes per line
+  */
+  CASE piTabWidth - piRndWidth:
+    WHEN 7 OR
+    WHEN 8 OR
+    WHEN 15 OR
+    WHEN 0 THEN
+      iiRnd = 0.
+    WHEN 5 OR
+    WHEN 6 OR
+    WHEN 13 OR
+    WHEN 14 THEN
+      iiRnd = 2.
+    WHEN 3 OR
+    WHEN 4 OR
+    WHEN 11 OR
+    WHEN 12 THEN
+      iiRnd = 4.
+    WHEN 1 OR
+    WHEN 2 OR
+    WHEN 9 OR
+    WHEN 10 THEN
+      iiRnd = 6.
+  END CASE.
+  /*
+  ** Finally calc the effective size in half bytes per scan line
+  */
+  ASSIGN
+    piRndWidth = (ROUND(piTabWidth / 2, 0) * 2) + iiRnd
+    piClrIdxItems = piTabHeight * piRndWidth / 2
+    icTabBmpFile = pcTabBmpDir + "\":U
+                 + (IF ilUp THEN "up":U ELSE "down":U) + "\":U
+                 + STRING(piTxtWidth, "999":U)
+                 + STRING(piTxtHeight, "99":U)
+                 + STRING(piFrmBGColor , "99":U)
+                 + ".bmp":U.
+  OUTPUT STREAM psBmp TO VALUE(icTabBmpFile) NO-MAP NO-CONVERT.
+  RUN PutBmpFileHdr.
+  RUN PutBmpInfoHdr.
+  RUN PutBmpRGBQuadArray.
+  RUN PutBmpClrIdx.
+  OUTPUT CLOSE.
+
+  RETURN.
+  
+END PROCEDURE.
+
+PROCEDURE PutBmpClrIdx :
+/*------------------------------------------------------------------------------
+  Purpose:     Write the actual colors for our bitmap
+  Parameters:  <none>
+  Notes:       1 byte represents 2 pixels
+------------------------------------------------------------------------------*/
+DEF VAR i           AS INT NO-UNDO.
+DEF VAR j           AS INT NO-UNDO.
+DEF VAR iiClrIdx    AS INT NO-UNDO. 
+DEF VAR ii1stHalf   AS INT NO-UNDO. 
+DEF VAR ii2ndHalf   AS INT NO-UNDO. 
+
+  DO i = 1 TO piTabHeight:
+    DO j = 1 TO piRndWidth BY 2:
+      CASE j:
+        WHEN 1 THEN
+          ii1stHalf = IF i < piTabHeight - 1 THEN 15 ELSE piFrmBGColor.
+        WHEN 2 THEN
+          CASE i:
+            WHEN piTabHeight THEN
+              ii1stHalf = piFrmBGColor.
+            WHEN piTabHeight - 1 THEN
+              ii1stHalf = 15.
+            OTHERWISE
+              ii1stHalf = piTabBGColor.
+          END CASE.
+        WHEN piTabWidth - 1 THEN
+          CASE i:
+            WHEN piTabHeight THEN
+              ii1stHalf = piFrmBGColor.
+            WHEN piTabHeight - 1 THEN
+              ii1stHalf = 0.
+            OTHERWISE
+              ii1stHalf = 7.
+          END CASE.
+        WHEN piTabWidth THEN
+          ii1stHalf = IF i < piTabHeight - 1 THEN 0 ELSE piFrmBGColor.
+        OTHERWISE
+          ii1stHalf = IF j > piTabWidth THEN 0
+                      ELSE
+                        IF i = piTabHeight THEN 15
+                        ELSE piTabBGColor.
+      END CASE.
+      CASE j + 1:
+        WHEN 1 THEN
+          ii2ndHalf = IF i < piTabHeight - 1 THEN 15 ELSE piFrmBGColor.
+        WHEN 2 THEN
+          CASE i:
+            WHEN piTabHeight THEN
+              ii2ndHalf = piFrmBGColor.
+            WHEN piTabHeight - 1 THEN
+              ii2ndHalf = 15.
+            OTHERWISE
+              ii2ndHalf = piTabBGColor.
+          END CASE.
+        WHEN piTabWidth - 1 THEN
+          CASE i:
+            WHEN piTabHeight THEN
+              ii2ndHalf = piFrmBGColor.
+            WHEN piTabHeight - 1 THEN
+              ii2ndHalf = 0.
+            OTHERWISE
+              ii2ndHalf = 7.
+          END CASE.
+        WHEN piTabWidth THEN
+          ii2ndHalf = IF i < piTabHeight - 1 THEN 0 ELSE piFrmBGColor.
+        OTHERWISE
+          ii2ndHalf = IF j + 1 > piTabWidth THEN 0
+                      ELSE
+                        IF i = piTabHeight THEN 15
+                        ELSE piTabBGColor.
+      END CASE.
+      iiClrIdx = (16 * ii1stHalf) + ii2ndHalf.
+      IF iiClrIdx > 0 THEN
+        PUT STREAM psBmp CONTROL CHR(iiClrIdx).
+      ELSE
+        PUT STREAM psBmp CONTROL NULL.
+    END.
+  END.
+
+END PROCEDURE.
+
+PROCEDURE PutBmpFileHdr :
+/*------------------------------------------------------------------------------
+  Purpose:     Write the bitmap BITMAPFILEHEADER structure
+  Parameters:  <none>
+  Notes:       When evaluating the low order bytes of the file size well assume
+               the bitmap will not exceed 64K
+------------------------------------------------------------------------------*/
+DEF VAR iiByte1 AS INT NO-UNDO.
+DEF VAR iiByte2 AS INT NO-UNDO.
+
+  /* Evaluate the file size bytes ... */
+  ASSIGN
+    iiByte2 = TRUNCATE((118 + piClrIdxItems) / 256, 0)
+    iiByte1 = 118 + piClrIdxItems - iiByte2 * 256.
+
+  /* Std bitmap id */
+  PUT STREAM psBmp CONTROL CHR(66) CHR(77).
+  /* Bitmap file size */
+  IF iiByte1 > 0 THEN
+    PUT STREAM psBmp CONTROL CHR(iiByte1).
+  ELSE
+    PUT STREAM psBmp CONTROL NULL.
+  IF iiByte2 > 0 THEN
+    PUT STREAM psBmp CONTROL CHR(iiByte2).
+  ELSE
+    PUT STREAM psBmp CONTROL NULL.
+  PUT STREAM psBmp CONTROL NULL NULL.
+  /* Reserved bytes */
+  PUT STREAM psBmp CONTROL NULL NULL.
+  PUT STREAM psBmp CONTROL NULL NULL.
+  /* Byte offset to start of color index */
+  PUT STREAM psBmp CONTROL CHR(118) NULL NULL NULL.
+
+END PROCEDURE.
+
+PROCEDURE PutBmpInfoHdr :
+/*------------------------------------------------------------------------------
+  Purpose:     Write the bitmap BITMAPINFOHEADER structure
+  Parameters:  <none>
+ Notes:       
+------------------------------------------------------------------------------*/
+DEF VAR iiByte1 AS INT NO-UNDO.
+DEF VAR iiByte2 AS INT NO-UNDO.
+
+  /* Size of info header */
+  PUT STREAM psBmp CONTROL CHR(40) NULL NULL NULL.
+  /* Width of bitmap (pixels) */
+  PUT STREAM psBmp CONTROL CHR(piTabWidth) NULL NULL NULL.
+  /* Height of bitmap (pixels) */
+  PUT STREAM psBmp CONTROL CHR(piTabHeight) NULL NULL NULL.
+  /* Planes (always 1) */
+  PUT STREAM psBmp CONTROL CHR(1) NULL.
+  /* Bit count (bits per pixel - 4 for 16 color bitmap */
+  PUT STREAM psBmp CONTROL CHR(4) NULL.
+  /* Compression */
+  PUT STREAM psBmp CONTROL NULL NULL NULL NULL.
+  /* Size image */
+  PUT STREAM psBmp CONTROL NULL NULL NULL NULL.
+  /* Y Pels per meter */
+  PUT STREAM psBmp CONTROL NULL NULL NULL NULL.
+  /* X Pels per meter */
+  PUT STREAM psBmp CONTROL NULL NULL NULL NULL.
+  /* Nbr of color indexes */
+  PUT STREAM psBmp CONTROL NULL NULL NULL NULL.
+  /* Nbr of color indexes that are important */
+  PUT STREAM psBmp CONTROL NULL NULL NULL NULL.
+
+END PROCEDURE.
+
+PROCEDURE PutBmpRGBQuadArray :
+/*------------------------------------------------------------------------------
+  Purpose:     Write the bitmap RGB Quad array structure
+  Parameters:  <none>
+ Notes:       For this programs purpose describe regular 16 color palette
+               in RGB terms
+------------------------------------------------------------------------------*/
+  PUT STREAM psBmp CONTROL
+    /* Black */
+    NULL NULL NULL NULL 
+    /* Dark blue */
+    CHR(128) NULL NULL NULL 
+    /* Dark green */
+    NULL CHR(128) NULL NULL 
+    /* Dark cyan */
+    CHR(128) CHR(128) NULL NULL 
+    /* Dark red */
+    NULL NULL CHR(128) NULL 
+    /* Dark megenta */
+    CHR(128) NULL CHR(128) NULL 
+    /* Dark yellow */
+    NULL CHR(128) CHR(128) NULL 
+    /* Dark gray */
+    CHR(128) CHR(128) CHR(128) NULL 
+    /* Light gray */
+    CHR(192) CHR(192) CHR(192) NULL 
+    /* Light blue */
+    CHR(255) NULL NULL NULL 
+    /* Light green */
+    NULL CHR(255) NULL NULL 
+    /* Light cyan */
+    CHR(255) CHR(255) NULL NULL 
+    /* Light red */
+    NULL NULL CHR(255) NULL 
+    /* Light magenta */
+    CHR(255) NULL CHR(255) NULL 
+    /* Light yellow */
+    NULL CHR(255) CHR(255) NULL 
+    /* White */
+    CHR(255) CHR(255) CHR(255) NULL.
+
+END PROCEDURE.
+

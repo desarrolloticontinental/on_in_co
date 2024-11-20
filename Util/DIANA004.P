@@ -1,0 +1,36 @@
+def var x-linea as char format 'x(20)'.
+
+def buffer b-cdocu for ccbcdocu.
+def buffer b-ddocu for ccbddocu.
+
+input from c:\tmp\facturas.txt.
+output to c:\tmp\materiales.txt.
+repeat:
+    import unformatted x-linea.
+    find ccbcdocu where codcia = 001 and coddoc = 'fac'
+        and nrodoc = x-linea no-lock no-error.
+    if available ccbcdocu then do:
+        for each ccbddocu of ccbcdocu no-lock:
+            for each b-cdocu no-lock where b-cdocu.codcia = 001
+                and b-cdocu.coddiv = ccbcdocu.coddiv
+                and b-cdocu.coddoc = 'fac'
+                and b-cdocu.nrodoc begins substring(ccbcdocu.nrodoc,1,3)
+                and b-cdocu.flgest <> 'a'
+                and b-cdocu.codcli <> ccbcdocu.codcli
+                and b-cdocu.fchdoc >= 02/01/2007
+                and b-cdocu.fchdoc <= ccbcdocu.fchdoc:
+                for each b-ddocu of b-cdocu no-lock where b-ddocu.codmat = ccbddocu.codmat:
+                    display 
+                        b-ddocu.codmat 
+                        b-ddocu.candes 
+                        b-cdocu.nrodoc 
+                        b-cdocu.fchdoc 
+                        b-cdocu.nomcli
+                        with stream-io no-box width 200.
+                end. 
+            end.            
+        end.
+    end.
+end.
+output close.
+input close.

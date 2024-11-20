@@ -1,0 +1,4 @@
+DEF VAR i AS INT.
+DO i=2 TO 10:
+    DISPLAY i WITH DOWN.
+END.

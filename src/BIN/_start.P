@@ -1,0 +1,207 @@
+&ANALYZE-SUSPEND _VERSION-NUMBER UIB_v8r12
+/* Procedure Description
+"Inicio del sistema"
+*/
+&ANALYZE-RESUME
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _DEFINITIONS Procedure 
+/*--------------------------------------------------------------------------
+    File        : 
+    Purpose     :
+
+    Syntax      :
+
+    Description :
+
+    Author(s)   :
+    Created     :
+    Notes       :
+  ------------------------------------------------------------------------*/
+/*          This .W file was created with the Progress UIB.             */
+/*----------------------------------------------------------------------*/
+
+/* ***************************  Definitions  ************************** */
+
+DEFINE NEW SHARED VARIABLE pRCID AS INT.
+
+DEFINE VARIABLE OK AS LOGICAL NO-UNDO.
+
+DEFINE VAR lClientIPAddress     AS CHAR.
+DEFINE VAR lClientComputerName  AS CHAR.
+DEFINE VAR lClientName          AS CHAR.
+DEFINE VAR lComputerName        AS CHAR.
+DEFINE VAR lRemote-user         AS CHAR.
+DEFINE VAR lUserName            AS CHAR.
+DEFINE VAR lxClientName         AS CHAR.
+DEFINE VAR lXRowId              AS CHAR.
+DEFINE VAR lRowId               AS INT.
+DEFINE VAR lPid                 AS INT.
+
+DEFINE TEMP-TABLE ttEstacionesPC 
+    FIELD   tNamePC     AS  CHAR
+    FIELD   tConnectPID AS  INT
+    FIELD   tUsrConexion AS  INT.
+
+
+DEFINE VAR x-tabla AS CHAR.
+DEFINE VAR x-llave AS CHAR.
+
+x-tabla = "LOGIN".
+x-llave = "PCS-X-USUARIO".
+
+DEFINE VAR x-vtatabla AS CHAR INIT "CONFIG-SESSION".
+DEFINE VAR x-llave_c1 AS CHAR INIT "DESBLOQUEO".
+DEFINE VAR x-llave_c2 AS CHAR INIT "AUTOMATICO".
+
+DEFINE VAR x-fechahora-inicio-session AS DATETIME.
+
+DEFINE VAR lPid-PC                 AS INT.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+&ANALYZE-SUSPEND _UIB-PREPROCESSOR-BLOCK 
+
+/* ********************  Preprocessor Definitions  ******************** */
+
+&Scoped-define PROCEDURE-TYPE Procedure
+&Scoped-define DB-AWARE no
+
+
+
+/* _UIB-PREPROCESSOR-BLOCK-END */
+&ANALYZE-RESUME
+
+
+
+/* *********************** Procedure Settings ************************ */
+
+&ANALYZE-SUSPEND _PROCEDURE-SETTINGS
+/* Settings for THIS-PROCEDURE
+   Type: Procedure
+   Allow: 
+   Frames: 0
+   Add Fields to: Neither
+   Other Settings: CODE-ONLY COMPILE
+ */
+&ANALYZE-RESUME _END-PROCEDURE-SETTINGS
+
+/* *************************  Create Window  ************************** */
+
+&ANALYZE-SUSPEND _CREATE-WINDOW
+/* DESIGN Window definition (used by the UIB) 
+  CREATE WINDOW Procedure ASSIGN
+         HEIGHT             = 6.54
+         WIDTH              = 55.14.
+/* END WINDOW DEFINITION */
+                                                                        */
+&ANALYZE-RESUME
+
+ 
+
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _CUSTOM _MAIN-BLOCK Procedure 
+
+
+/* ***************************  Main Block  *************************** */
+
+/* Usuario del Sistema */
+DEF VAR pUser AS CHAR NO-UNDO.
+DEF VAR pPassword AS CHAR NO-UNDO.
+DEF VAR pParametros AS CHAR NO-UNDO.
+RUN bin/_new-login (OUTPUT pUser, OUTPUT pPassword).
+
+pParametros = "-db integral -N TCP -H 192.168.100.209 -S 65010 -U " + pUser + " -P " + pPassword.
+CONNECT VALUE(pParametros) NO-ERROR.
+IF ERROR-STATUS:ERROR THEN DO:
+    MESSAGE 'NO conectado' ERROR-STATUS:GET-MESSAGE(1)
+        VIEW-AS ALERT-BOX.
+    QUIT.
+END.
+
+IF USERID("integral") = ? THEN DO:
+    QUIT.
+END.    
+/*MESSAGE 'Conectado' pParametros USERID("integral") VIEW-AS ALERT-BOX.*/
+
+DEFINE VAR lConnOk AS LOGICAL.
+DEFINE VAR lExcConn AS CHAR INIT '0'.
+
+DEFINE NEW SHARED VARIABLE gTerminalServer AS CHAR.
+
+gTerminalServer = OS-GETENV ( "COMPUTERNAME").
+
+RUN datos-de-la-pc.
+
+DEFINE VAR hProc AS HANDLE NO-UNDO.
+
+RUN src/bin/start-library PERSISTENT SET hProc.
+
+RUN um-verifica-conexiones IN hProc (lComputerName,
+                                     lxClientName,
+                                     lRemote-user,
+                                     lUserName,
+                                     OUTPUT lConnOk,
+                                     OUTPUT lExcConn).
+
+IF lConnOk = NO THEN QUIT.
+
+/* Graba datos de la session */
+RUN um-control-usuario IN hProc (INPUT lExcConn,
+                                 INPUT lClientIPAddress,
+                                 INPUT lClientComputerName,
+                                 INPUT lClientName,
+                                 INPUT lComputerName,
+                                 INPUT lUserName,
+                                 INPUT lRemote-User,
+                                 INPUT lxClientName,
+                                 OUTPUT pRCID 
+                                 ).
+
+DELETE PROCEDURE hProc.
+
+RUN bin/_integra.w.
+
+QUIT.
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+
+/* **********************  Internal Procedures  *********************** */
+
+&IF DEFINED(EXCLUDE-datos-de-la-pc) = 0 &THEN
+
+&ANALYZE-SUSPEND _UIB-CODE-BLOCK _PROCEDURE datos-de-la-pc Procedure 
+PROCEDURE datos-de-la-pc :
+/*------------------------------------------------------------------------------
+  Purpose:     
+  Parameters:  <none>
+  Notes:       
+------------------------------------------------------------------------------*/
+
+lClientIPAddress    = OS-GETENV ( "CLIENTCOMPUTERIPADDRESS").
+lClientComputerName = OS-GETENV ( "CLIENTCOMPUTERNAME").
+lClientName         = OS-GETENV ( "CLIENTNAME").
+lComputerName       = OS-GETENV ( "COMPUTERNAME").
+lRemote-user        = OS-GETENV ( "REMOTE_USER").
+lUserName           = OS-GETENV ( "USERNAME").
+
+lxClientName        = IF (lClientComputerName = ? OR lClientComputerName = "") THEN lClientName ELSE lClientComputerName.
+lxClientName        = IF (CAPS(lxClientName) = "CONSOLE") THEN "" ELSE lxClientName.
+lxClientName        = IF (lxClientName = ? OR lxClientName = "") THEN lComputerName ELSE lxClientName.
+
+
+END PROCEDURE.
+
+DEF VAR LocalClientComputerName AS CHAR.
+DEF VAR LocalComputerName AS CHAR.
+
+LocalClientComputerName = OS-GETENV('CLIENTCOMPUTERNAME').
+LocalComputerName = OS-GETENV('COMPUTERNAME').
+
+/* _UIB-CODE-BLOCK-END */
+&ANALYZE-RESUME
+
+&ENDIF
+
