@@ -699,26 +699,26 @@ DEFINE FRAME F-Main
      FILL-IN-Mensaje AT ROW 24.96 COL 1 COLON-ALIGNED NO-LABEL WIDGET-ID 88
      "Documentos en S/." VIEW-AS TEXT
           SIZE 14 BY .5 AT ROW 23.35 COL 67.72
-     "(*)  Doble Click - Visualiza Detalle" VIEW-AS TEXT
-          SIZE 29 BY .73 AT ROW 24.08 COL 2.14
-          FONT 6
-     "División Origen:" VIEW-AS TEXT
-          SIZE 11 BY .5 AT ROW 2.23 COL 7 WIDGET-ID 92
-     "N/C:" VIEW-AS TEXT
-          SIZE 4 BY .5 AT ROW 5.92 COL 52 WIDGET-ID 80
-     "Comprobante:" VIEW-AS TEXT
-          SIZE 10 BY .5 AT ROW 5.12 COL 8 WIDGET-ID 8
-     "Saldo Total" VIEW-AS TEXT
-          SIZE 10 BY .5 AT ROW 24.69 COL 57.72
-     "Documentos en US$/" VIEW-AS TEXT
-          SIZE 15 BY .5 AT ROW 23.35 COL 83.72
-     "Importe Total" VIEW-AS TEXT
-          SIZE 10 BY .5 AT ROW 23.92 COL 57.72
+     "Moneda:" VIEW-AS TEXT
+          SIZE 6 BY .5 AT ROW 4.96 COL 121 WIDGET-ID 78
      "(*)  Click Derecho - Visualiza Pagos" VIEW-AS TEXT
           SIZE 29 BY .73 AT ROW 23.42 COL 2
           FONT 6
-     "Moneda:" VIEW-AS TEXT
-          SIZE 6 BY .5 AT ROW 4.96 COL 121 WIDGET-ID 78
+     "Importe Total" VIEW-AS TEXT
+          SIZE 10 BY .5 AT ROW 23.92 COL 57.72
+     "Documentos en US$/" VIEW-AS TEXT
+          SIZE 15 BY .5 AT ROW 23.35 COL 83.72
+     "Saldo Total" VIEW-AS TEXT
+          SIZE 10 BY .5 AT ROW 24.69 COL 57.72
+     "Comprobante:" VIEW-AS TEXT
+          SIZE 10 BY .5 AT ROW 5.12 COL 8 WIDGET-ID 8
+     "N/C:" VIEW-AS TEXT
+          SIZE 4 BY .5 AT ROW 5.92 COL 52 WIDGET-ID 80
+     "División Origen:" VIEW-AS TEXT
+          SIZE 11 BY .5 AT ROW 2.23 COL 7 WIDGET-ID 92
+     "(*)  Doble Click - Visualiza Detalle" VIEW-AS TEXT
+          SIZE 29 BY .73 AT ROW 24.08 COL 2.14
+          FONT 6
      RECT-62 AT ROW 1 COL 2 WIDGET-ID 106
     WITH 1 DOWN NO-BOX KEEP-TAB-ORDER OVERLAY 
          SIDE-LABELS NO-UNDERLINE THREE-D 
@@ -1055,18 +1055,13 @@ DO:
       MESSAGE "Fecha de emision DESDE debe ser menor/igual a HASTA" VIEW-AS ALERT-BOX INFORMATION.
       RETURN NO-APPLY.
   END.
-  
+  /*
   IF f-Hasta > ADD-INTERVAL(f-desde,6,'months') THEN DO:
-      MESSAGE "Rango de Fechas de emisión supera los 6 meses" SKIP
-          "Continuamos con el proceso?" VIEW-AS ALERT-BOX QUESTION BUTTONS YES-NO UPDATE rpta-2 AS LOG.
-      IF rpta-2 = NO THEN DO:
-          APPLY 'ENTRY':U TO f-Desde.
-          RETURN NO-APPLY.
-      END.
-/*       MESSAGE "Rango de Fechas de emision no debe exceder a 6 meses" VIEW-AS ALERT-BOX INFORMATION. */
-/*       APPLY 'ENTRY':U TO f-Desde.                                                                   */
-/*       RETURN NO-APPLY.                                                                              */
+      MESSAGE "Rango de Fechas de emision no debe exceder a 6 meses" VIEW-AS ALERT-BOX INFORMATION.
+      APPLY 'ENTRY':U TO f-Desde.
+      RETURN NO-APPLY.
   END.
+  */
 
 /*   IF (x-fchcan-hasta - x-fchcan-desde) > 95 THEN DO:                                                */
 /*       MESSAGE "Rango de Fechas de emision no debe exceder a 3 meses" VIEW-AS ALERT-BOX INFORMATION. */
