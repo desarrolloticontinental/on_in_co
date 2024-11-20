@@ -1,0 +1,30 @@
+# *** CONFIGURACIONES ***
+
+-lng "Spanish"
+-cpcase Basic
+-cpcoll Basic
+#-origbrowsel
+-rereadnolock
+-evtlevel none
+
+-cpinternal iSO8859-1   # Especifica el código de página para todos
+                        # los procesamientos de datos internos.
+-cpstream ISO8859-1     # Specifies the code page for all stream files
+
+-cpprint ibm850         # Salidas por impresora
+
+-d      dmy		# Formato de Fecha
+-T      D:\newsie\tmp	# Directorio donde graba los temporales
+-s      256		# Stack Size (KB)
+-inp    8000            # No. de caracteres por línea de programa
+-TB	31		# buffers Area de Sorteo (KB)
+-TM	24
+-tmpbsize 8
+
+# *** BASE DE DATOS ***
+-db INTEGRAL
+-ld INTEGRAL
+-H  192.168.100.200
+-N  TCP
+#-S  IN_ON_IN
+-S  65111
