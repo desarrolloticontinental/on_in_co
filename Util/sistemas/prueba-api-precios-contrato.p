@@ -15,7 +15,7 @@ RUN web/web-library PERSISTENT SET hProc.
 a = ETIME(YES).
 
     RUN web_api-pricing-preuni-contrato IN hProc ('00047621400',
-                                         '032776',
+                                         '000752',
                                          OUTPUT pMonVta,
                                          OUTPUT pPrecioDescontado,
                                          OUTPUT pUndVta,
