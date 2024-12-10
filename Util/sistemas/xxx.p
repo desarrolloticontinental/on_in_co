@@ -1,5 +1,6 @@
 /* RHC 12/06/18 De cualquier cliente del grupo */
 DEF BUFFER x-vtatabla FOR vtatabla.
+/* Esta línea es del hotfix */
 
 DEF VAR LocalMaster AS CHAR.
 DEF VAR LocalRelacionados AS CHAR.
