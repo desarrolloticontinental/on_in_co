@@ -1,4 +1,6 @@
 /* RHC 12/06/18 De cualquier cliente del grupo */
+/* Línea adicional en la rama testing */
+
 DEF BUFFER x-vtatabla FOR vtatabla.
 
 DEF VAR LocalMaster AS CHAR.
