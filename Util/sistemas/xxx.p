@@ -1,5 +1,6 @@
 /* RHC 12/06/18 De cualquier cliente del grupo */
 /* Línea adicional en la rama testing */
+/* Línea nueva */
 
 DEF BUFFER x-vtatabla FOR vtatabla.
 
