@@ -4,6 +4,7 @@ DEF VAR pCodMat AS CHAR.
 DEF VAR pMarca AS CHAR.
 DEF VAR CMB-filtro AS CHAR.
 DEF VAR pFiltro AS CHAR.
+DEF VAR pPrueba AS CHAR.
 
 DEF TEMP-TABLE t-Almmmatg LIKE Almmmatg.
 
