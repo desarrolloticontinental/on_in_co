@@ -36,8 +36,6 @@ CREATE WIDGET-POOL.
 
 /* Local Variable Definitions ---                                       */
 
-MESSAGE 'Mensaje de prueba' VIEW-AS ALERT-BOX WARNING.
-
 /* _UIB-CODE-BLOCK-END */
 &ANALYZE-RESUME
 
